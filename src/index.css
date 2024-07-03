@@ -1,0 +1,10 @@
+.bar {
+    background-color: rgb(102, 157, 230);
+    border-radius: 5px;
+    text-align: center;
+    margin: 0;
+}
+
+.display, .slider {
+    display: flex;
+}
