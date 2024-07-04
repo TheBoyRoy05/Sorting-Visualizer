@@ -14,7 +14,7 @@ export default async function InsertionSort(
     while (j > 0 && ascending === heights[j] < heights[j - 1]) {
       await new Promise<void>((resolve) => {
         setTimeout(() => {
-          bars = getBars(bars, heights, j, i + 1);
+          bars = getBars(bars, heights, [j], i + 1);
           setBars(bars);
           heights = swap(heights, j, j - 1);
           resolve();
@@ -27,7 +27,7 @@ export default async function InsertionSort(
 
   await new Promise<void>((resolve) => {
     setTimeout(() => {
-      bars = getBars(bars, heights, -1, heights.length - 1);
+      bars = getBars(bars, heights, [], heights.length - 1);
       setBars(bars);
       resolve();
     }, timeInterval);

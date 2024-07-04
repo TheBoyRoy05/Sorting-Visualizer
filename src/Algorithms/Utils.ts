@@ -13,14 +13,14 @@ export function swap(
 export function getBars(
   bars: BarProps[],
   heights: number[],
-  sortingCondition: number,
+  sortingCondition: number[],
   sortedCondition: number
 ): BarProps[] {
   return heights.map((height, index) => ({
     width: bars[index].width,
     height: height,
     status:
-      index === sortingCondition
+      sortingCondition.includes(index)
         ? ("sorting" as const)
         : index < sortedCondition
         ? ("sorted" as const)
