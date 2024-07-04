@@ -1,5 +1,12 @@
 import { BarProps } from "../Components/Display";
 
+export interface SortProps {
+  bars: BarProps[];
+  setBars: (bars: BarProps[]) => void;
+  timeInterval: number;
+  ascending: boolean;
+}
+
 export function swap(
   array: number[],
   index1: number,
@@ -19,12 +26,11 @@ export function getBars(
   return heights.map((height, index) => ({
     width: bars[index].width,
     height: height,
-    status:
-      sortingCondition.includes(index)
-        ? ("sorting" as const)
-        : index < sortedCondition
-        ? ("sorted" as const)
-        : ("unsorted" as const),
+    status: sortingCondition.includes(index)
+      ? ("sorting" as const)
+      : index < sortedCondition
+      ? ("sorted" as const)
+      : ("unsorted" as const),
   }));
 }
 

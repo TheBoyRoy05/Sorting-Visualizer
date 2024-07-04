@@ -3,6 +3,7 @@ import Display, { BarProps } from "./Components/Display";
 import Slider from "./Components/Slider";
 import SelectionSort from "./Algorithms/Selection.ts";
 import InsertionSort from "./Algorithms/Insertion.ts";
+import BubbleSort from "./Algorithms/Bubble.ts";
 
 const App: FC = () => {
   const DISPLAY_WIDTH = 1000;
@@ -10,9 +11,10 @@ const App: FC = () => {
 
   const [arraySize, setArraySize] = useState(10);
   const [sortSpeed, setSortSpeed] = useState(10);
+  const [ascending, setAscending] = useState(true);
   const [bars, setBars] = useState<BarProps[]>([]);
 
-  const timeInterval = Math.min(100 / bars.length / sortSpeed, 1) * 1000;
+  const timeInterval = Math.min(100 / bars.length / sortSpeed, 1) * 500;
 
   const generate = (arraySize: number) => {
     const bars = Array.from({ length: arraySize }, () =>
@@ -32,15 +34,27 @@ const App: FC = () => {
   return (
     <div className="app">
       <button onClick={() => generate(arraySize)}>{"Generate"}</button>
-      <button onClick={() => SelectionSort(bars, setBars, timeInterval, true)}>
+      <button onClick={() => setAscending(!ascending)}>
+        {ascending ? "Ascending" : "Descending"}
+      </button>
+      <button
+        onClick={() => SelectionSort({bars, setBars, timeInterval, ascending})}
+      >
         {"Selection"}
       </button>
-      <button onClick={() => InsertionSort(bars, setBars, timeInterval, true)}>
+      <button
+        onClick={() => InsertionSort({bars, setBars, timeInterval, ascending})}
+      >
         {"Insertion"}
+      </button>
+      <button
+        onClick={() => BubbleSort({bars, setBars, timeInterval, ascending})}
+      >
+        {"Bubble"}
       </button>
       <Slider
         text="Array Size"
-        min={3}
+        min={4}
         max={100}
         step={1}
         value={arraySize}

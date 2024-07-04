@@ -1,12 +1,8 @@
-import { BarProps } from "../Components/Display";
-import { swap, getBars, setAllSorted } from "./Utils";
+import { swap, getBars, setAllSorted, SortProps } from "./Utils";
 
-export default async function InsertionSort(
-  bars: BarProps[],
-  setBars: (bars: BarProps[]) => void,
-  timeInterval: number,
-  ascending: boolean
-) {
+export default async function InsertionSort(props: SortProps) {
+  const { setBars, timeInterval, ascending } = props;
+  let { bars } = props;
   let heights = bars.map((bar) => bar.height);
 
   for (let i = 1; i < heights.length; i++) {

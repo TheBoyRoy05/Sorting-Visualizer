@@ -1,12 +1,8 @@
-import { BarProps } from "../Components/Display";
-import { swap, getBars, setAllSorted } from "./Utils.ts";
+import { swap, getBars, setAllSorted, SortProps } from "./Utils.ts";
 
-export default async function SelectionSort(
-  bars: BarProps[],
-  setBars: (bars: BarProps[]) => void,
-  timeInterval: number,
-  ascending: boolean
-) {
+export default async function SelectionSort(props: SortProps) {
+  const { setBars, timeInterval, ascending } = props;
+  let { bars } = props;
   let heights = bars.map((bar) => bar.height);
 
   for (let i = 0; i < heights.length; i++) {
@@ -17,11 +13,16 @@ export default async function SelectionSort(
       await new Promise<void>((resolve) => {
         setTimeout(() => {
           nextHeight = next(nextHeight, heights[j]);
-          bars = getBars(bars, heights, [heights.slice(i).indexOf(nextHeight) + i, j], i);
+          bars = getBars(
+            bars,
+            heights,
+            [heights.slice(i).indexOf(nextHeight) + i, j],
+            i
+          );
           setBars(bars);
           resolve();
-        }, timeInterval)
-      })
+        }, timeInterval);
+      });
     }
 
     heights = swap(heights, i, heights.slice(i).indexOf(nextHeight) + i);
