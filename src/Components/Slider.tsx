@@ -4,11 +4,12 @@ interface SliderProps {
   text: string;
   min: number;
   max: number;
+  step: number;
   value: number;
   setValue: (value: number) => void;
 }
 
-const Slider: FC<SliderProps> = ({ min, max, text, value, setValue }) => {
+const Slider: FC<SliderProps> = ({ min, max, step, text, value, setValue }) => {
   return (
     <div className="slider">
       <p className="slider-text">{text}</p>
@@ -17,6 +18,7 @@ const Slider: FC<SliderProps> = ({ min, max, text, value, setValue }) => {
         onChange={(e) => setValue(Number(e.target.value))}
         min={`${min}`}
         max={`${max}`}
+        step={step}
         value={value}
       />
       <p className="slider-value">{value}</p>
