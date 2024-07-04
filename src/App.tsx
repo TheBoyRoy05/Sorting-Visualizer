@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from "react";
+import SelectionSort from "./Algorithms/Selection";
 
 interface BarProps {
   width: number;
@@ -13,67 +14,82 @@ const Bar: FC<BarProps> = ({ width, height, index }) => {
   };
   return (
     <div className="bar" id={index} style={style}>
-      <p className="bar-text">{width > 20 ? height : ""}</p>
+      <p className="bar-text">{width > 30 ? height : ""}</p>
     </div>
   );
 };
 
 interface DisplayProps {
   heights: number[];
+  numElems: number;
 }
 
-const Display: FC<DisplayProps> = ({ heights }) => {
+const Display: FC<DisplayProps> = ({ heights, numElems }) => {
+  const DISPLAY_WIDTH = 1000;
+  const MAX_WIDTH = 100;
+
   return (
     <div className="display">
       {heights.map((height, index) => (
-        <Bar key={index} width={21} height={height} index={index.toString()} />
+        <Bar
+          key={index}
+          width={Math.min(DISPLAY_WIDTH / numElems, MAX_WIDTH)}
+          height={height}
+          index={index.toString()}
+        />
       ))}
     </div>
   );
 };
 
-interface CustomButtonProps {
+interface SliderProps {
   text: string;
-  handleClick: () => void;
+  min: number;
+  max: number;
+  value: number;
+  setValue: (value: number) => void;
 }
 
-const CustomButton: FC<CustomButtonProps> = ({ text, handleClick }) => {
-  return <button onClick={handleClick}>{text}</button>;
+const Slider: FC<SliderProps> = ({ min, max, text, value, setValue }) => {
+  return (
+    <div className="slider">
+      <p className="slider-text">{text}</p>
+      <input
+        type="range"
+        onChange={(e) => setValue(Number(e.target.value))}
+        min={`${min}`}
+        max={`${max}`}
+        value={value}
+      />
+      <p className="slider-value">{value}</p>
+    </div>
+  );
 };
 
 const App: FC = () => {
-  const [numElems, setNumElems] = useState(10);
+  const [arraySize, setArraySize] = useState(10);
   const [heights, setHeights] = useState<number[]>([]);
 
-  const generate = (numElems: number) => {
-    setHeights(Array.from({ length: numElems }, () => getRandomInt(1, 100)));
+  const generate = (arraySize: number) => {
+    setHeights(Array.from({ length: arraySize }, () => getRandomInt(10, 200)));
   };
 
   useEffect(() => {
-    generate(numElems);
-  }, [numElems]);
+    generate(arraySize);
+  }, [arraySize]);
 
   return (
     <div className="app">
-      <CustomButton text="Generate" handleClick={() => generate(numElems)} />
-      <div className="slider">
-        <input
-          type="range"
-          onChange={(e) => setNumElems(Number(e.target.value))}
-          min="2"
-          max="100"
-          step="1"
-          value={numElems}
-        />
-        <p className="slider-value">{numElems}</p>
-      </div>
-      <Display heights={heights} />
+      <button onClick={() => generate(arraySize)}>{"Generate"}</button>
+      <button onClick={() => SelectionSort(heights, setHeights)}>{"Selection"}</button>
+      <Slider text="Array Size" min={3} max={100} value={arraySize} setValue={setArraySize} />
+      <Display heights={heights} numElems={arraySize} />
     </div>
   );
 };
 
 const getRandomInt = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min)) + min;
 };
 
 export default App;
