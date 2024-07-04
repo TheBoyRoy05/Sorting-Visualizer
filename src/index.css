@@ -1,8 +1,19 @@
 .bar {
-    background-color: rgb(102, 157, 230);
     border-radius: 5px;
     text-align: center;
     margin: 0;
+}
+
+.unsorted {
+    background-color: rgb(102, 157, 230);
+}
+
+.sorting {
+    background-color: rgb(240, 93, 93);
+}
+
+.sorted {
+    background-color: rgb(64, 240, 102);
 }
 
 .display, .slider {
