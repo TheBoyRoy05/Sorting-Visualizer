@@ -3,7 +3,7 @@ import { FC } from "react";
 export interface BarProps {
   width: number;
   height: number;
-  status: "unsorted" | "sorting" | "sorted";
+  status: "unsorted" | "targeted" | "sorting" | "sorted";
 }
 
 const Bar: FC<BarProps> = ({ width, height, status }) => {

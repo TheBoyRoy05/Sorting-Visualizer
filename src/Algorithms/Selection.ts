@@ -1,7 +1,7 @@
 import { swap, getBars, setAllSorted, SortProps } from "./Utils.ts";
 
 export default async function SelectionSort(props: SortProps) {
-  const { setBars, timeInterval, ascending } = props;
+  const { setBars, interval, ascending } = props;
   let { bars } = props;
   let heights = bars.map((bar) => bar.height);
 
@@ -21,7 +21,7 @@ export default async function SelectionSort(props: SortProps) {
           );
           setBars(bars);
           resolve();
-        }, timeInterval);
+        }, interval);
       });
     }
 

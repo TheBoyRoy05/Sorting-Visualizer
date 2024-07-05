@@ -1,54 +1,37 @@
-import { swap, getBars, setAllSorted, SortProps } from "./Utils";
+import { getBars, setAllSorted, shift, SortProps } from "./Utils";
 
-// export default async function MergeSort(props: SortProps) {
-//   const { setBars, timeInterval, ascending } = props;
-//   let { bars } = props;
-//   let heights = bars.map((bar) => bar.height);
+export default async function MergeSort(props: SortProps) {
+  const { bars, setBars, interval, ascending } = props;
+  let heights = bars.map((bar) => bar.height);
 
-//   for (let i = 1; i < heights.length; i++) {
-//     for (let j = heights.length - 1; j >= i; j--) {
-//       await new Promise<void>((resolve) => {
-//         setTimeout(() => {
-// 					bars = getBars(bars, heights, [j, j - 1], i - 1);
-//           setBars(bars);
-// 					if (heights[j] < heights[j - 1] === ascending) {
-// 						heights = swap(heights, j, j - 1);
-// 					}
-//           resolve();
-//         }, timeInterval);
-//       });
-//     }
-//   }
+  const sort = async (start: number, end: number): Promise<void> => {
+    if (end - start <= 1) return;
 
-//   setBars(setAllSorted(bars));
-// }
+    const mid = Math.ceil((start + end) / 2);
+    await sort(start, mid);
+    await sort(mid, end);
 
-function sort(heights: number[]): number[] {
-  if (heights.length === 1) return heights;
+    let i = 0, j = 0;
+    const left = heights.slice(start, mid);
+    const right = heights.slice(mid, end);
 
-  let half1 = heights.slice(0, heights.length / 2);
-  let half2 = heights.slice(heights.length / 2);
+    while (i < left.length && j < right.length) {
+      await new Promise<void>((resolve) =>
+        setTimeout(() => {
+          setBars(getBars(bars, heights, [start + i + j, mid + j], start));
+          resolve();
+        }, interval)
+      );
 
-  half1 = sort(half1);
-  half2 = sort(half2);
-
-  return merge(half1, half2);
-}
-
-function merge(half1: number[], half2: number[]): number[] {
-  const merged: number[] = [];
-
-  while (half1.length !== 0 && half2.length !== 0) {
-    if (half1[0] > half2[0]) {
-      merged.push(half2[0]);
-      half2 = half2.slice(1);
-    } else {
-      merged.push(half1[0]);
-      half1 = half1.slice(1);
+      if (left[i] > right[j] === ascending) {
+        heights = shift(heights, start + i + j, mid + j);
+        j++;
+      } else {
+        i++;
+      }
     }
-  }
+  };
 
-  return [...merged, ...half1, ...half2];
+  await sort(0, bars.length);
+  setBars(setAllSorted(getBars(bars, heights, [], -1)));
 }
-
-console.log(sort([5, 2, 3, 5, 8, 9, 1]))

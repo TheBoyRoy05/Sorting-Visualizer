@@ -3,33 +3,38 @@ import { BarProps } from "../Components/Display";
 export interface SortProps {
   bars: BarProps[];
   setBars: (bars: BarProps[]) => void;
-  timeInterval: number;
+  interval: number;
   ascending: boolean;
 }
 
-export function swap(
-  array: number[],
-  index1: number,
-  index2: number
-): number[] {
+export function swap(array: number[], i1: number, i2: number): number[] {
   const newArray = [...array];
-  [newArray[index1], newArray[index2]] = [newArray[index2], newArray[index1]];
+  [newArray[i1], newArray[i2]] = [newArray[i2], newArray[i1]];
   return newArray;
+}
+
+export function shift(array: number[], to: number, from: number): number[] {
+  return [
+    ...array.slice(0, to),
+    array[from],
+    ...array.slice(to, from),
+    ...array.slice(from + 1),
+  ];
 }
 
 export function getBars(
   bars: BarProps[],
   heights: number[],
-  sortingCondition: number[],
-  sortedCondition: number
+  targets: number[],
+  sortingFrom: number
 ): BarProps[] {
   return heights.map((height, index) => ({
     width: bars[index].width,
     height: height,
-    status: sortingCondition.includes(index)
+    status: targets.includes(index)
+      ? ("targeted" as const)
+      : index < sortingFrom
       ? ("sorting" as const)
-      : index < sortedCondition
-      ? ("sorted" as const)
       : ("unsorted" as const),
   }));
 }

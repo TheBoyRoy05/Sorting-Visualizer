@@ -4,6 +4,7 @@ import Slider from "./Components/Slider";
 import SelectionSort from "./Algorithms/Selection.ts";
 import InsertionSort from "./Algorithms/Insertion.ts";
 import BubbleSort from "./Algorithms/Bubble.ts";
+import MergeSort from "./Algorithms/Merge.ts";
 
 const App: FC = () => {
   const DISPLAY_WIDTH = 1000;
@@ -14,7 +15,8 @@ const App: FC = () => {
   const [ascending, setAscending] = useState(true);
   const [bars, setBars] = useState<BarProps[]>([]);
 
-  const timeInterval = Math.min(100 / bars.length / sortSpeed, 1) * 500;
+  const interval = Math.min(100 / bars.length / sortSpeed, 1) * 500;
+  const sort_info = { bars, setBars, interval, ascending };
 
   const generate = (arraySize: number) => {
     const bars = Array.from({ length: arraySize }, () =>
@@ -37,21 +39,10 @@ const App: FC = () => {
       <button onClick={() => setAscending(!ascending)}>
         {ascending ? "Ascending" : "Descending"}
       </button>
-      <button
-        onClick={() => SelectionSort({bars, setBars, timeInterval, ascending})}
-      >
-        {"Selection"}
-      </button>
-      <button
-        onClick={() => InsertionSort({bars, setBars, timeInterval, ascending})}
-      >
-        {"Insertion"}
-      </button>
-      <button
-        onClick={() => BubbleSort({bars, setBars, timeInterval, ascending})}
-      >
-        {"Bubble"}
-      </button>
+      <button onClick={() => SelectionSort(sort_info)}>{"Selection"}</button>
+      <button onClick={() => InsertionSort(sort_info)}>{"Insertion"}</button>
+      <button onClick={() => BubbleSort(sort_info)}>{"Bubble"}</button>
+      <button onClick={() => MergeSort(sort_info)}>{"Merge"}</button>
       <Slider
         text="Array Size"
         min={4}

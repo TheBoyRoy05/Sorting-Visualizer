@@ -8,8 +8,12 @@
     background-color: rgb(102, 157, 230);
 }
 
-.sorting {
+.targeted {
     background-color: rgb(240, 93, 93);
+}
+
+.sorting {
+    background-color: rgb(237, 143, 240);
 }
 
 .sorted {
