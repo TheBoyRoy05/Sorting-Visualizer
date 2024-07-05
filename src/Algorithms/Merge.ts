@@ -1,15 +1,19 @@
 import { getBars, setAllSorted, shift, SortProps } from "./Utils";
 
 export default async function MergeSort(props: SortProps) {
-  const { bars, setBars, interval, ascending } = props;
+  const { bars, setBars, interval, ascending, multiThread } = props;
   let heights = bars.map((bar) => bar.height);
 
   const sort = async (start: number, end: number): Promise<void> => {
     if (end - start <= 1) return;
 
     const mid = Math.ceil((start + end) / 2);
-    await sort(start, mid);
-    await sort(mid, end);
+    if (multiThread) {
+      await Promise.all([sort(start, mid), sort(mid, end)]);
+    } else {
+      await sort(start, mid);
+      await sort(mid, end);
+    }
 
     let i = 0, j = 0;
     const left = heights.slice(start, mid);

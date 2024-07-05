@@ -5,6 +5,7 @@ export interface SortProps {
   setBars: (bars: BarProps[]) => void;
   interval: number;
   ascending: boolean;
+  multiThread: boolean;
 }
 
 export function swap(array: number[], i1: number, i2: number): number[] {

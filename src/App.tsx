@@ -13,10 +13,11 @@ const App: FC = () => {
   const [arraySize, setArraySize] = useState(10);
   const [sortSpeed, setSortSpeed] = useState(10);
   const [ascending, setAscending] = useState(true);
+  const [multiThread, setMultiThread] = useState(false);
   const [bars, setBars] = useState<BarProps[]>([]);
 
   const interval = Math.min(100 / bars.length / sortSpeed, 1) * 500;
-  const sort_info = { bars, setBars, interval, ascending };
+  const sort_info = { bars, setBars, interval, ascending, multiThread };
 
   const generate = (arraySize: number) => {
     const bars = Array.from({ length: arraySize }, () =>
@@ -38,6 +39,9 @@ const App: FC = () => {
       <button onClick={() => generate(arraySize)}>{"Generate"}</button>
       <button onClick={() => setAscending(!ascending)}>
         {ascending ? "Ascending" : "Descending"}
+      </button>
+      <button onClick={() => setMultiThread(!multiThread)}>
+        {multiThread ? "Multi-Thread" : "Single Thread"}
       </button>
       <button onClick={() => SelectionSort(sort_info)}>{"Selection"}</button>
       <button onClick={() => InsertionSort(sort_info)}>{"Insertion"}</button>
