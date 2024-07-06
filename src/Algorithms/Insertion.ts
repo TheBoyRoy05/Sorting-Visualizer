@@ -1,34 +1,24 @@
 import { SortProps } from "../Utils/Props";
-import { swap, getBars, setAllSorted } from "../Utils/Utils";
+import { swap, getBars, visualize, finalize } from "../Utils/Utils";
 
 export default async function InsertionSort(props: SortProps) {
-  const { setBars, interval, ascending } = props;
-  let { bars } = props;
+  const { bars, setBars, interval, ascending } = props;
   let heights = bars.map((bar) => bar.height);
 
-  for (let i = 1; i < heights.length; i++) {
-    let j = i;
-    while (j > 0 && ascending === heights[j] < heights[j - 1]) {
-      await new Promise<void>((resolve) => {
-        setTimeout(() => {
-          bars = getBars(bars, heights, [j], i + 1);
-          setBars(bars);
+  for (let i = 0; i < heights.length; i++) {
+    if (i > 0 && heights[i] < heights[i - 1] === ascending) {
+      let j = i;
+      while (j > 0 && heights[j] < heights[j - 1] === ascending) {
+        await visualize(() => {
+          setBars(getBars(bars, heights, [j], i + 1));
           heights = swap(heights, j, j - 1);
-          resolve();
         }, interval);
-      });
-
-      j--;
+        j--;
+      }
+    } else {
+      await visualize(() => setBars(getBars(bars, heights, [i], i + 1)), interval);
     }
   }
 
-  await new Promise<void>((resolve) => {
-    setTimeout(() => {
-      bars = getBars(bars, heights, [], heights.length - 1);
-      setBars(bars);
-      resolve();
-    }, interval);
-  });
-
-  setBars(setAllSorted(bars));
+  finalize(props, heights);
 }

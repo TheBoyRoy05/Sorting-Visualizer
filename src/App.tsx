@@ -19,7 +19,7 @@ const App: FC = () => {
   const [partition, setPartition] = useState<partitionType>("Lomuto");
   const [bars, setBars] = useState<BarProps[]>([]);
 
-  const interval = Math.min(100 / bars.length / sortSpeed, 1) * 500;
+  const interval = Math.min(100 / bars.length / sortSpeed, 1) * 1500;
   const sort_info = {
     bars,
     setBars,
