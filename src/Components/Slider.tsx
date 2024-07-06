@@ -1,13 +1,5 @@
 import { FC } from "react";
-
-interface SliderProps {
-  text: string;
-  min: number;
-  max: number;
-  step: number;
-  value: number;
-  setValue: (value: number) => void;
-}
+import { SliderProps } from "../Utils/Props";
 
 const Slider: FC<SliderProps> = ({ min, max, step, text, value, setValue }) => {
   return (

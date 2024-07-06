@@ -1,4 +1,5 @@
-import { swap, getBars, setAllSorted, SortProps } from "./Utils";
+import { SortProps } from "../Utils/Props";
+import { swap, getBars, setAllSorted } from "../Utils/Utils";
 
 export default async function BubbleSort(props: SortProps) {
   const { setBars, interval, ascending } = props;

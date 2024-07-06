@@ -1,10 +1,5 @@
 import { FC } from "react";
-
-export interface BarProps {
-  width: number;
-  height: number;
-  status: "unsorted" | "targeted" | "sorting" | "sorted";
-}
+import { BarProps, DisplayProps } from "../Utils/Props";
 
 const Bar: FC<BarProps> = ({ width, height, status }) => {
   const style = {
@@ -17,10 +12,6 @@ const Bar: FC<BarProps> = ({ width, height, status }) => {
     </div>
   );
 };
-
-interface DisplayProps {
-  bars: BarProps[];
-}
 
 const Display: FC<DisplayProps> = ({ bars }) => {
   return (

@@ -1,4 +1,5 @@
-import { swap, getBars, setAllSorted, SortProps } from "./Utils.ts";
+import { SortProps } from "../Utils/Props.ts";
+import { swap, getBars, setAllSorted } from "../Utils/Utils.ts";
 
 export default async function SelectionSort(props: SortProps) {
   const { setBars, interval, ascending } = props;

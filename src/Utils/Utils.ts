@@ -1,12 +1,4 @@
-import { BarProps } from "../Components/Display";
-
-export interface SortProps {
-  bars: BarProps[];
-  setBars: (bars: BarProps[]) => void;
-  interval: number;
-  ascending: boolean;
-  multiThread: boolean;
-}
+import { BarProps } from "./Props";
 
 export function swap(array: number[], i1: number, i2: number): number[] {
   const newArray = [...array];
@@ -26,14 +18,17 @@ export function shift(array: number[], to: number, from: number): number[] {
 export function getBars(
   bars: BarProps[],
   heights: number[],
+  sortingFrom: number,
   targets: number[],
-  sortingFrom: number
+  pivotIndex?: number
 ): BarProps[] {
   return heights.map((height, index) => ({
     width: bars[index].width,
     height: height,
     status: targets.includes(index)
       ? ("targeted" as const)
+      : index === pivotIndex
+      ? ("pivot" as const)
       : index < sortingFrom
       ? ("sorting" as const)
       : ("unsorted" as const),
