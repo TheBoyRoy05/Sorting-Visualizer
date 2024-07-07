@@ -1,4 +1,9 @@
-export type statusType = "unsorted" | "targeted" | "pivot" | "sorting" | "sorted";
+export type statusType =
+  | "unsorted"
+  | "targeted"
+  | "selected"
+  | "sorting"
+  | "sorted";
 export type partitionType = "Lomuto" | "Hoare";
 
 export interface BarProps {
@@ -27,4 +32,11 @@ export interface SortProps {
   ascending: boolean;
   multiThread?: boolean;
   partition?: partitionType;
+}
+
+export interface statusProps {
+  targets?: number[] | number;
+  selected?: number[] | number;
+  sorting?: number[] | number;
+  sorted?: number[] | number;
 }

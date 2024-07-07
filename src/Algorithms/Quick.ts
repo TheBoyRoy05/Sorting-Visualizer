@@ -1,19 +1,23 @@
 import { SortProps } from "../Utils/Props";
-import { finalize, colorBars, swap, visualize } from "../Utils/Utils";
+import { finalize, swap, visualize } from "../Utils/Utils";
 
 export default async function QuickSort(props: SortProps) {
-  const { bars, setBars, interval, ascending, multiThread, partition } = props;
+  const { bars, ascending, multiThread, partition } = props;
   let heights = bars.map((bar) => bar.height);
   const pivots: number[] = [];
 
   const medianOfThree = (low: number, mid: number, high: number) =>
     [heights[low], heights[mid], heights[high]].sort((x, y) => x - y)[1];
 
-  const visualizeStep = (i: number, j: number, pivotIndex: number) =>
-    visualize(() => {
-      const oldPivots = pivots.map((pivot) => heights.indexOf(pivot));
-      setBars(colorBars(bars, heights, [i, j], -1, oldPivots, pivotIndex));
-    }, interval);
+  const visualizeStep = async (i: number, j: number, pivotIndex: number) => {
+    const oldPivots = pivots.map((pivot) => heights.indexOf(pivot));
+    const status = {
+      targets: [i, j],
+      sorting: oldPivots,
+      selected: pivotIndex,
+    };
+    await visualize(heights, props, status);
+  };
 
   const lomutoPartition = async (low: number, high: number, pivot: number) => {
     let i = low;
@@ -35,24 +39,23 @@ export default async function QuickSort(props: SortProps) {
     heights = swap(heights, heights.indexOf(pivot), mid);
     let i = low;
     let j = high;
-  
+
     // eslint-disable-next-line no-constant-condition
     while (true) {
       const pivotIndex = heights.indexOf(pivot);
       await visualizeStep(i, j, pivotIndex);
-  
+
       while (ascending ? heights[i] < pivot : heights[i] > pivot) {
         i++;
         await visualizeStep(i, j, pivotIndex);
       }
-  
+
       while (ascending ? heights[j] > pivot : heights[j] < pivot) {
         j--;
         await visualizeStep(i, j, pivotIndex);
       }
-  
+
       if (i >= j) return j;
-  
       heights = swap(heights, i, j);
       i++;
       j--;
@@ -66,17 +69,15 @@ export default async function QuickSort(props: SortProps) {
     const pivot = medianOfThree(low, mid, high);
     pivots.push(pivot);
 
-    const pivotIndex = partition === "Lomuto"
-      ? await lomutoPartition(low, high, pivot)
-      : await hoarePartition(low, high, pivot);
+    const pivotIndex =
+      partition === "Lomuto"
+        ? await lomutoPartition(low, high, pivot)
+        : await hoarePartition(low, high, pivot);
 
     const leftHigh = pivotIndex - Number(partition === "Lomuto");
 
     if (multiThread) {
-      await Promise.all([
-        sort(low, leftHigh),
-        sort(pivotIndex + 1, high),
-      ]);
+      await Promise.all([sort(low, leftHigh), sort(pivotIndex + 1, high)]);
     } else {
       await sort(low, leftHigh);
       await sort(pivotIndex + 1, high);

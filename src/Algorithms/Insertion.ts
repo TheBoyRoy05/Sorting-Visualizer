@@ -1,23 +1,18 @@
 import { SortProps } from "../Utils/Props";
-import { swap, colorBars, visualize, finalize } from "../Utils/Utils";
+import { swap, visualize, finalize } from "../Utils/Utils";
 
 export default async function InsertionSort(props: SortProps) {
-  const { bars, setBars, interval, ascending } = props;
+  const { bars, ascending } = props;
   let heights = bars.map((bar) => bar.height);
 
   for (let i = 0; i < heights.length; i++) {
-    await visualize(
-      () => setBars(colorBars(bars, heights, [i], i + 1)),
-      interval
-    );
+    await visualize(heights, props, { targets: i, sorting: i + 1 });
 
     let j = i;
     while (j > 0 && heights[j] < heights[j - 1] === ascending) {
-      await visualize(() => {
-        heights = swap(heights, j, j - 1);
-        setBars(colorBars(bars, heights, [j - 1], i + 1));
-      }, interval);
       j--;
+      heights = swap(heights, j, j + 1);
+      await visualize(heights, props, { targets: j, sorting: i + 1 });
     }
   }
 

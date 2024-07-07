@@ -1,4 +1,4 @@
-import { BarProps, SortProps } from "./Props";
+import { SortProps, statusProps } from "./Props";
 
 export function swap(array: number[], i1: number, i2: number): number[] {
   const newArray = [...array];
@@ -15,58 +15,50 @@ export function shift(array: number[], to: number, from: number): number[] {
   ];
 }
 
-export function colorBars(
-  bars: BarProps[],
+export async function visualize(
   heights: number[],
-  targets?: number[],
-  sortingFrom?: number,
-  sorting?: number[],
-  pivotIndex?: number
-): BarProps[] {
-  return heights.map((height, index) => ({
-    width: bars[index].width,
-    height: height,
-    status:
-      targets && targets.includes(index)
-        ? "targeted"
-        : index === pivotIndex
-        ? "pivot"
-        : sorting && sorting.includes(index)
-        ? "sorting"
-        : sortingFrom && index < sortingFrom
-        ? "sorting"
-        : "unsorted",
-  }));
-}
-
-export async function visualize(callback: () => void, interval: number) {
+  sortProps: SortProps,
+  statusProps: statusProps
+) {
   await new Promise<void>((resolve) => {
+    const { targets, selected, sorting, sorted } = statusProps;
+    const { setBars, interval } = sortProps;
+    let { bars } = sortProps;
     setTimeout(() => {
-      callback();
+      bars = heights.map((height, index) => ({
+        width: bars[index].width,
+        height: height,
+        status:
+          (typeof selected === "number" && index === selected) ||
+          (typeof selected === "object" && selected.includes(index))
+            ? "selected"
+            : (typeof targets === "number" && index === targets) ||
+              (typeof targets === "object" && targets.includes(index))
+            ? "targeted"
+            : (typeof sorting === "number" && index < sorting) ||
+              (typeof sorting === "object" && sorting.includes(index))
+            ? "sorting"
+            : (typeof sorted === "number" && index < sorted) ||
+              (typeof sorted === "object" && sorted.includes(index))
+            ? "sorted"
+            : "unsorted",
+      }));
+      setBars(bars);
       resolve();
     }, interval);
   });
 }
 
 export async function finalize(props: SortProps, heights: number[]) {
-  let { bars } = props;
-  const { setBars, interval, ascending } = props;
+  const { bars, ascending } = props;
   const sorted = heights
     .slice(1)
     .every((height, i) =>
       ascending ? height >= heights[i] : height <= heights[i]
     );
 
-  bars = colorBars(bars, heights, [], bars.length);
-  await visualize(() => setBars(bars), interval);
+  await visualize(heights, props, { sorting: bars.length });
   if (sorted) {
-    setTimeout(() => setBars(setAllSorted(bars)), interval);
+    await visualize(heights, props, { sorted: bars.length });
   }
-}
-
-function setAllSorted(bars: BarProps[]): BarProps[] {
-  return bars.map((bar) => ({
-    ...bar,
-    status: "sorted" as const,
-  }));
 }

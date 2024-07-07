@@ -12,8 +12,8 @@
     background-color: rgb(240, 93, 93);
 }
 
-.pivot {
-    background-color: rgb(228, 230, 102);
+.selected {
+    background-color: rgb(252, 202, 111);
 }
 
 .sorting {
