@@ -1,10 +1,10 @@
 import { SortProps } from "../Utils/Props";
-import { finalize, getBars, swap, visualize } from "../Utils/Utils";
+import { finalize, colorBars, swap, visualize } from "../Utils/Utils";
 
 export default async function QuickSort(props: SortProps) {
   const { bars, setBars, interval, ascending, multiThread, partition } = props;
-  const pivots: number[] = [];
   let heights = bars.map((bar) => bar.height);
+  const pivots: number[] = [];
 
   const medianOfThree = (low: number, mid: number, high: number) =>
     [heights[low], heights[mid], heights[high]].sort((x, y) => x - y)[1];
@@ -12,7 +12,7 @@ export default async function QuickSort(props: SortProps) {
   const visualizeStep = (i: number, j: number, pivotIndex: number) =>
     visualize(() => {
       const oldPivots = pivots.map((pivot) => heights.indexOf(pivot));
-      setBars(getBars(bars, heights, [i, j], -1, oldPivots, pivotIndex));
+      setBars(colorBars(bars, heights, [i, j], -1, oldPivots, pivotIndex));
     }, interval);
 
   const lomutoPartition = async (low: number, high: number, pivot: number) => {

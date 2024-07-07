@@ -1,5 +1,5 @@
 import { SortProps } from "../Utils/Props";
-import { finalize, getBars, shift, visualize } from "../Utils/Utils";
+import { finalize, colorBars, shift, visualize } from "../Utils/Utils";
 
 export default async function MergeSort(props: SortProps) {
   const { bars, setBars, interval, ascending, multiThread } = props;
@@ -23,7 +23,7 @@ export default async function MergeSort(props: SortProps) {
 
     while (i < left.length && j < right.length) {
       await visualize(
-        () => setBars(getBars(bars, heights, [start + i + j, mid + j], start)),
+        () => setBars(colorBars(bars, heights, [start + i + j, mid + j], start)),
         interval
       );
 

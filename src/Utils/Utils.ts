@@ -15,7 +15,7 @@ export function shift(array: number[], to: number, from: number): number[] {
   ];
 }
 
-export function getBars(
+export function colorBars(
   bars: BarProps[],
   heights: number[],
   targets?: number[],
@@ -57,7 +57,7 @@ export async function finalize(props: SortProps, heights: number[]) {
       ascending ? height >= heights[i] : height <= heights[i]
     );
 
-  bars = getBars(bars, heights, [], bars.length);
+  bars = colorBars(bars, heights, [], bars.length);
   await visualize(() => setBars(bars), interval);
   if (sorted) {
     setTimeout(() => setBars(setAllSorted(bars)), interval);

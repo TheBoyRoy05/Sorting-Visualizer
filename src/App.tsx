@@ -7,6 +7,7 @@ import BubbleSort from "./Algorithms/Bubble.ts";
 import MergeSort from "./Algorithms/Merge.ts";
 import QuickSort from "./Algorithms/Quick.ts";
 import { BarProps, partitionType } from "./Utils/Props.ts";
+import HeapSort from "./Algorithms/Heap.ts";
 
 const App: FC = () => {
   const DISPLAY_WIDTH = 1000;
@@ -51,6 +52,7 @@ const App: FC = () => {
         <button onClick={() => SelectionSort(sort_info)}>{"Selection"}</button>
         <button onClick={() => InsertionSort(sort_info)}>{"Insertion"}</button>
         <button onClick={() => BubbleSort(sort_info)}>{"Bubble"}</button>
+        <button onClick={() => HeapSort(sort_info)}>{"Heap"}</button>
         <button onClick={() => MergeSort(sort_info)}>{"Merge"}</button>
         <button onClick={() => QuickSort(sort_info)}>{"Quick"}</button>
       </div>

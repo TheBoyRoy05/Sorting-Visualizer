@@ -1,5 +1,5 @@
 import { SortProps } from "../Utils/Props.ts";
-import { swap, getBars, visualize, finalize } from "../Utils/Utils.ts";
+import { swap, colorBars, visualize, finalize } from "../Utils/Utils.ts";
 
 export default async function SelectionSort(props: SortProps) {
   const { bars, setBars, interval, ascending } = props;
@@ -13,7 +13,7 @@ export default async function SelectionSort(props: SortProps) {
       const nextIndex = heights.slice(i).indexOf(nextHeight) + i;
       await visualize(() => {
         nextHeight = getNext(nextHeight, heights[j]);
-        setBars(getBars(bars, heights, [nextIndex, j], i));
+        setBars(colorBars(bars, heights, [nextIndex, j], i));
       }, interval);
     }
 
