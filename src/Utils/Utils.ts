@@ -39,7 +39,6 @@ export function getBars(
   }));
 }
 
-
 export async function visualize(callback: () => void, interval: number) {
   await new Promise<void>((resolve) => {
     setTimeout(() => {
@@ -50,11 +49,19 @@ export async function visualize(callback: () => void, interval: number) {
 }
 
 export async function finalize(props: SortProps, heights: number[]) {
-  const { setBars, interval } = props;
   let { bars } = props;
+  const { setBars, interval, ascending } = props;
+  const sorted = heights
+    .slice(1)
+    .every((height, i) =>
+      ascending ? height >= heights[i] : height <= heights[i]
+    );
+
   bars = getBars(bars, heights, [], bars.length);
   await visualize(() => setBars(bars), interval);
-  setTimeout(() => setBars(setAllSorted(bars)), interval);
+  if (sorted) {
+    setTimeout(() => setBars(setAllSorted(bars)), interval);
+  }
 }
 
 function setAllSorted(bars: BarProps[]): BarProps[] {

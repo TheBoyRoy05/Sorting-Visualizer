@@ -6,73 +6,79 @@ export default async function QuickSort(props: SortProps) {
   const pivots: number[] = [];
   let heights = bars.map((bar) => bar.height);
 
+  const medianOfThree = (low: number, mid: number, high: number) =>
+    [heights[low], heights[mid], heights[high]].sort((x, y) => x - y)[1];
+
+  const visualizeStep = (i: number, j: number, pivotIndex: number) =>
+    visualize(() => {
+      const oldPivots = pivots.map((pivot) => heights.indexOf(pivot));
+      setBars(getBars(bars, heights, [i, j], -1, oldPivots, pivotIndex));
+    }, interval);
+
+  const lomutoPartition = async (low: number, high: number, pivot: number) => {
+    let i = low;
+    heights = swap(heights, heights.indexOf(pivot), high);
+
+    for (let j = low; j < high; j++) {
+      await visualizeStep(i, j, high);
+      if (ascending ? heights[j] <= pivot : heights[j] >= pivot) {
+        heights = swap(heights, i, j);
+        i++;
+      }
+    }
+    heights = swap(heights, i, high);
+    return i;
+  };
+
+  const hoarePartition = async (low: number, high: number, pivot: number) => {
+    const mid = Math.floor((low + high) / 2);
+    heights = swap(heights, heights.indexOf(pivot), mid);
+    let i = low;
+    let j = high;
+  
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const pivotIndex = heights.indexOf(pivot);
+      await visualizeStep(i, j, pivotIndex);
+  
+      while (ascending ? heights[i] < pivot : heights[i] > pivot) {
+        i++;
+        await visualizeStep(i, j, pivotIndex);
+      }
+  
+      while (ascending ? heights[j] > pivot : heights[j] < pivot) {
+        j--;
+        await visualizeStep(i, j, pivotIndex);
+      }
+  
+      if (i >= j) return j;
+  
+      heights = swap(heights, i, j);
+      i++;
+      j--;
+    }
+  };
+
   const sort = async (low: number, high: number): Promise<void> => {
     if (high <= low) return;
 
     const mid = Math.floor((low + high) / 2);
-    const pivot = [heights[low], heights[mid], heights[high]].sort(
-      (x, y) => x - y
-    )[1];
-    let pivotIndex = heights.indexOf(pivot);
-    let i = pivotIndex;
-
-    if (partition === "Lomuto") {
-      heights = swap(heights, pivotIndex, high);
-      i = low;
-
-      for (let j = low; j < high; j++) {
-        await visualize(() => {
-          const oldPivots = pivots.map((pivot) => heights.indexOf(pivot));
-          setBars(getBars(bars, heights, [i, j], -1, oldPivots, high));
-        }, interval);
-
-        if (heights[j] <= pivot === ascending) {
-          heights = swap(heights, i, j);
-          i++;
-        }
-      }
-      heights = swap(heights, i, high);
-      pivotIndex = i;
-    } else if (partition === "Hoare") {
-      heights = swap(heights, pivotIndex, mid);
-      i = low;
-      let j = high;
-
-      // eslint-disable-next-line no-constant-condition
-      while (true) {
-        await visualize(() => {
-          const oldPivots = pivots.map((pivot) => heights.indexOf(pivot));
-          pivotIndex = heights.indexOf(pivot);
-          setBars(getBars(bars, heights, [i, j], -1, oldPivots, pivotIndex));
-        }, interval);
-
-        while (heights[i] < pivot || heights[j] > pivot) {
-          if (heights[i] < pivot) i++;
-          if (heights[j] > pivot) j--;
-          await visualize(() => {
-            const oldPivots = pivots.map((pivot) => heights.indexOf(pivot));
-            pivotIndex = heights.indexOf(pivot);
-            setBars(getBars(bars, heights, [i, j], -1, oldPivots, pivotIndex));
-          }, interval);
-        }
-
-        if (i >= j) break;
-
-        heights = swap(heights, i, j);
-        i++;
-        j--;
-      }
-      pivotIndex = j;
-    }
+    const pivot = medianOfThree(low, mid, high);
     pivots.push(pivot);
+
+    const pivotIndex = partition === "Lomuto"
+      ? await lomutoPartition(low, high, pivot)
+      : await hoarePartition(low, high, pivot);
+
+    const leftHigh = pivotIndex - Number(partition === "Lomuto");
 
     if (multiThread) {
       await Promise.all([
-        sort(low, pivotIndex - Number(partition === "Lomuto")),
+        sort(low, leftHigh),
         sort(pivotIndex + 1, high),
       ]);
     } else {
-      await sort(low, pivotIndex - Number(partition === "Lomuto"));
+      await sort(low, leftHigh);
       await sort(pivotIndex + 1, high);
     }
   };
