@@ -15,8 +15,6 @@ export default async function QuickSort(props: SortProps) {
     )[1];
     let pivotIndex = heights.indexOf(pivot);
     let i = pivotIndex;
-    pivots.push(pivot);
-    // console.log(low, high, pivot, heights);
 
     if (partition === "Lomuto") {
       heights = swap(heights, pivotIndex, high);
@@ -24,8 +22,8 @@ export default async function QuickSort(props: SortProps) {
 
       for (let j = low; j < high; j++) {
         await visualize(() => {
-          const pivotIndeces = pivots.map((pivot) => heights.indexOf(pivot));
-          setBars(getBars(bars, heights, [i, j], -1, pivotIndeces, high));
+          const oldPivots = pivots.map((pivot) => heights.indexOf(pivot));
+          setBars(getBars(bars, heights, [i, j], -1, oldPivots, high));
         }, interval);
 
         if (heights[j] <= pivot === ascending) {
@@ -34,37 +32,47 @@ export default async function QuickSort(props: SortProps) {
         }
       }
       heights = swap(heights, i, high);
+      pivotIndex = i;
     } else if (partition === "Hoare") {
       heights = swap(heights, pivotIndex, mid);
       i = low;
       let j = high;
 
-      while (i <= j) {
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        await visualize(() => {
+          const oldPivots = pivots.map((pivot) => heights.indexOf(pivot));
+          pivotIndex = heights.indexOf(pivot);
+          setBars(getBars(bars, heights, [i, j], -1, oldPivots, pivotIndex));
+        }, interval);
+
         while (heights[i] < pivot || heights[j] > pivot) {
-          await visualize(() => {
-            const pivotIndeces = pivots.map((pivot) => heights.indexOf(pivot));
-            setBars(getBars(bars, heights, [low, high], -1, pivotIndeces, mid));
-          }, interval);
           if (heights[i] < pivot) i++;
           if (heights[j] > pivot) j--;
+          await visualize(() => {
+            const oldPivots = pivots.map((pivot) => heights.indexOf(pivot));
+            pivotIndex = heights.indexOf(pivot);
+            setBars(getBars(bars, heights, [i, j], -1, oldPivots, pivotIndex));
+          }, interval);
         }
-        if (i <= j) {
-          heights = swap(heights, i, j);
-          i++;
-          j--;
-        }
-      }
-    }
 
-    pivotIndex = i;
+        if (i >= j) break;
+
+        heights = swap(heights, i, j);
+        i++;
+        j--;
+      }
+      pivotIndex = j;
+    }
+    pivots.push(pivot);
 
     if (multiThread) {
       await Promise.all([
-        sort(low, pivotIndex - 1),
+        sort(low, pivotIndex - Number(partition === "Lomuto")),
         sort(pivotIndex + 1, high),
       ]);
     } else {
-      await sort(low, pivotIndex - 1);
+      await sort(low, pivotIndex - Number(partition === "Lomuto"));
       await sort(pivotIndex + 1, high);
     }
   };

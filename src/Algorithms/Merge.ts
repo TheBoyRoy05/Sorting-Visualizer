@@ -37,5 +37,5 @@ export default async function MergeSort(props: SortProps) {
   };
 
   await sort(0, bars.length);
-  finalize(props, heights);
+  await finalize(props, heights);
 }

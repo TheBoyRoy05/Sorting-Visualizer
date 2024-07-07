@@ -20,5 +20,5 @@ export default async function SelectionSort(props: SortProps) {
     heights = swap(heights, i, heights.slice(i).indexOf(nextHeight) + i);
   }
 
-  finalize(props, heights);
+  await finalize(props, heights);
 }

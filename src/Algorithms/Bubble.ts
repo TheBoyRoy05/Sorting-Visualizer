@@ -16,5 +16,5 @@ export default async function BubbleSort(props: SortProps) {
     }
   }
   
-  finalize(props, heights);
+  await finalize(props, heights);
 }

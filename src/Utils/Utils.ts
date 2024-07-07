@@ -20,7 +20,7 @@ export function getBars(
   heights: number[],
   targets?: number[],
   sortingFrom?: number,
-  sorted?: number[],
+  sorting?: number[],
   pivotIndex?: number
 ): BarProps[] {
   return heights.map((height, index) => ({
@@ -31,8 +31,8 @@ export function getBars(
         ? "targeted"
         : index === pivotIndex
         ? "pivot"
-        : sorted && sorted.includes(index)
-        ? "sorted"
+        : sorting && sorting.includes(index)
+        ? "sorting"
         : sortingFrom && index < sortingFrom
         ? "sorting"
         : "unsorted",
