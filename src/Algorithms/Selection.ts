@@ -1,8 +1,7 @@
-import { SortProps } from "../Utils/Props.ts";
-import { swap, visualize, finalize } from "../Utils/Utils.ts";
+import { useSortContext } from "../Utils/SortContext.tsx";
 
-export default async function SelectionSort(props: SortProps) {
-  const { bars, ascending } = props;
+export default async function SelectionSort() {
+  const { bars, ascending, swap, visualize, finalize } = useSortContext();
   const getNext = ascending ? Math.min : Math.max;
   let heights = bars.map((bar) => bar.height);
 
@@ -18,11 +17,11 @@ export default async function SelectionSort(props: SortProps) {
         targets: j,
         sorting: i,
       };
-      await visualize(heights, props, status);
+      await visualize(heights, status);
     }
 
     heights = swap(heights, i, nextIndex);
   }
 
-  await finalize(props, heights);
+  await finalize(heights);
 }

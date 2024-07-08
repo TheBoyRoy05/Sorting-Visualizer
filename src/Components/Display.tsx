@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { BarProps, DisplayProps } from "../Utils/Props";
+import { BarProps } from "../Utils/Props";
+import { useSortContext } from "../Utils/SortContext";
 
 const Bar: FC<BarProps> = ({ width, height, status }) => {
   const style = {
@@ -13,7 +14,8 @@ const Bar: FC<BarProps> = ({ width, height, status }) => {
   );
 };
 
-const Display: FC<DisplayProps> = ({ bars }) => {
+const Display: FC = () => {
+  const { bars } = useSortContext();
   return (
     <div className="display">
       {bars.map((bar, index) => (

@@ -1,8 +1,8 @@
-import { SortProps } from "../Utils/Props";
-import { finalize, shift, visualize } from "../Utils/Utils";
+import { useSortContext } from "../Utils/SortContext";
 
-export default async function MergeSort(props: SortProps) {
-  const { bars, ascending, multiThread } = props;
+export default async function MergeSort() {
+  const { bars, ascending, multiThread, shift, visualize, finalize } =
+    useSortContext();
   let heights = bars.map((bar) => bar.height);
 
   const sort = async (start: number, end: number): Promise<void> => {
@@ -22,8 +22,8 @@ export default async function MergeSort(props: SortProps) {
     const right = heights.slice(mid, end);
 
     while (i < left.length && j < right.length) {
-      const status = {targets: [start + i + j, mid + j], sorting: start};
-      await visualize(heights, props, status);
+      const status = { targets: [start + i + j, mid + j], sorting: start };
+      await visualize(heights, status);
 
       if (left[i] > right[j] === ascending) {
         heights = shift(heights, start + i + j, mid + j);
@@ -35,5 +35,5 @@ export default async function MergeSort(props: SortProps) {
   };
 
   await sort(0, bars.length);
-  await finalize(props, heights);
+  await finalize(heights);
 }

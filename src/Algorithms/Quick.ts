@@ -1,8 +1,8 @@
-import { SortProps } from "../Utils/Props";
-import { finalize, swap, visualize } from "../Utils/Utils";
+import { useSortContext } from "../Utils/SortContext";
 
-export default async function QuickSort(props: SortProps) {
-  const { bars, ascending, multiThread, partition } = props;
+export default async function QuickSort() {
+  const { bars, ascending, multiThread, partition, swap, visualize, finalize } =
+    useSortContext();
   let heights = bars.map((bar) => bar.height);
   const pivots: number[] = [];
 
@@ -16,7 +16,7 @@ export default async function QuickSort(props: SortProps) {
       sorting: oldPivots,
       selected: pivotIndex,
     };
-    await visualize(heights, props, status);
+    await visualize(heights, status);
   };
 
   const lomutoPartition = async (low: number, high: number, pivot: number) => {
@@ -85,5 +85,5 @@ export default async function QuickSort(props: SortProps) {
   };
 
   await sort(0, bars.length - 1);
-  finalize(props, heights);
+  finalize(heights);
 }

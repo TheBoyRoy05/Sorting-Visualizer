@@ -12,10 +12,6 @@ export interface BarProps {
   status: statusType;
 }
 
-export interface DisplayProps {
-  bars: BarProps[];
-}
-
 export interface SliderProps {
   text: string;
   min: number;
@@ -25,18 +21,32 @@ export interface SliderProps {
   setValue: (value: number) => void;
 }
 
-export interface SortProps {
-  bars: BarProps[];
-  setBars: (bars: BarProps[]) => void;
-  interval: number;
-  ascending: boolean;
-  multiThread?: boolean;
-  partition?: partitionType;
-}
-
-export interface statusProps {
+export interface StatusProps {
   targets?: number[] | number;
   selected?: number[] | number;
   sorting?: number[] | number;
   sorted?: number[] | number;
+}
+
+export interface SortContextType {
+  arraySize: number;
+  setArraySize: (size: number) => void;
+  sortSpeed: number;
+  setSortSpeed: (speed: number) => void;
+  ascending: boolean;
+  setAscending: (asc: boolean) => void;
+  multiThread: boolean;
+  setMultiThread: (multi: boolean) => void;
+  partition: partitionType;
+  setPartition: (part: partitionType) => void;
+  degree: number;
+  setDegree: (deg: number) => void;
+  bars: BarProps[];
+  setBars: (bars: BarProps[]) => void;
+  interval: number;
+  generate: (size: number) => void;
+  swap: (array: number[], i1: number, i2: number) => number[];
+  shift: (array: number[], to: number, from: number) => number[];
+  visualize: (heights: number[], status: StatusProps) => Promise<void>;
+  finalize: (heights: number[]) => Promise<void>;
 }

@@ -1,60 +1,34 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import Display from "./Components/Display";
 import Slider from "./Components/Slider";
-import SelectionSort from "./Algorithms/Selection.ts";
-import InsertionSort from "./Algorithms/Insertion.ts";
-import BubbleSort from "./Algorithms/Bubble.ts";
-import MergeSort from "./Algorithms/Merge.ts";
-import QuickSort from "./Algorithms/Quick.ts";
-import { BarProps, partitionType } from "./Utils/Props.ts";
-import HeapSort from "./Algorithms/Heap.ts";
+import SelectionSort from "./Algorithms/Selection";
+import InsertionSort from "./Algorithms/Insertion";
+import BubbleSort from "./Algorithms/Bubble";
+import MergeSort from "./Algorithms/Merge";
+import QuickSort from "./Algorithms/Quick";
+import HeapSort from "./Algorithms/Heap";
+import { useSortContext } from "./Utils/SortContext";
 
 const App: FC = () => {
-  const DISPLAY_WIDTH = 1000;
-  const MAX_BAR_WIDTH = 100;
-
-  const [arraySize, setArraySize] = useState(10);
-  const [sortSpeed, setSortSpeed] = useState(10);
-  const [ascending, setAscending] = useState(true);
-  const [multiThread, setMultiThread] = useState(false);
-  const [partition, setPartition] = useState<partitionType>("Lomuto");
-  const [bars, setBars] = useState<BarProps[]>([]);
-
-  const interval = Math.min(100 / bars.length / sortSpeed, 1) * 500;
-  const sort_info = {
-    bars,
-    setBars,
-    interval,
-    ascending,
-    multiThread,
-    partition,
-  };
-
-  const generate = (arraySize: number) => {
-    const bars = Array.from({ length: arraySize }, () =>
-      getRandomInt(10, 200)
-    ).map((height) => ({
-      height,
-      width: Math.min(DISPLAY_WIDTH / arraySize, MAX_BAR_WIDTH),
-      status: "unsorted" as const,
-    }));
-    setBars(bars);
-  };
-
-  useEffect(() => {
-    generate(arraySize);
-  }, [arraySize]);
+  const {
+    arraySize, setArraySize,
+    sortSpeed, setSortSpeed,
+    ascending, setAscending,
+    multiThread, setMultiThread,
+    partition, setPartition, 
+    generate
+  } = useSortContext();
 
   return (
     <div className="app">
       <div className="sorts">
         <p className="sorts-text">Sorts:</p>
-        <button onClick={() => SelectionSort(sort_info)}>{"Selection"}</button>
-        <button onClick={() => InsertionSort(sort_info)}>{"Insertion"}</button>
-        <button onClick={() => BubbleSort(sort_info)}>{"Bubble"}</button>
-        <button onClick={() => HeapSort(sort_info)}>{"Heap"}</button>
-        <button onClick={() => MergeSort(sort_info)}>{"Merge"}</button>
-        <button onClick={() => QuickSort(sort_info)}>{"Quick"}</button>
+        <button onClick={() => SelectionSort()}>{"Selection"}</button>
+        <button onClick={() => InsertionSort()}>{"Insertion"}</button>
+        <button onClick={() => BubbleSort()}>{"Bubble"}</button>
+        <button onClick={() => HeapSort()}>{"Heap"}</button>
+        <button onClick={() => MergeSort()}>{"Merge"}</button>
+        <button onClick={() => QuickSort()}>{"Quick"}</button>
       </div>
       <div className="options">
         <p className="options-text">Options: </p>
@@ -89,13 +63,9 @@ const App: FC = () => {
         value={sortSpeed}
         setValue={setSortSpeed}
       />
-      <Display bars={bars} />
+      <Display />
     </div>
   );
-};
-
-const getRandomInt = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min)) + min;
 };
 
 export default App;
