@@ -12,6 +12,12 @@ export interface BarProps {
   status: statusType;
 }
 
+export interface StatsProps {
+  comparisons: number;
+  swaps: number;
+  time: number;
+}
+
 export interface SliderProps {
   text: string;
   min: number;
@@ -45,17 +51,13 @@ export interface SortContextType {
   setCheckAnim: (check: boolean) => void;
   bars: BarProps[];
   setBars: (bars: BarProps[]) => void;
+  stats: StatsProps;
+  setStats: (stats: StatsProps) => void;
   heights: number[];
   interval: number;
+  swap: (array: number[], i1: number, i2: number) => number[];
+  shift: (array: number[], to: number, from: number) => number[];
+  checkSorted: (heights: number[], runAnim?: boolean) => Promise<boolean>;
   visualize: (heights: number[], status: StatusProps) => Promise<void>;
-  checkSorted: (
-    heights: number[],
-    checkAnim: boolean,
-    visualize: (heights: number[], statusInfo: StatusProps) => Promise<void>
-  ) => Promise<boolean>;
-  finalize: (
-    heights: number[],
-    checkSorted: (heights: number[], checkAnim: boolean) => Promise<boolean>,
-    visualize: (heights: number[], statusInfo: StatusProps) => Promise<void>
-  ) => Promise<void>;
+  finalize: (heights: number[]) => Promise<void>;
 }

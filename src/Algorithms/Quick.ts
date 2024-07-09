@@ -1,11 +1,15 @@
+/* eslint-disable no-constant-condition */
 import { SortContextType } from "../Utils/Props";
-import { swap } from "../Utils/SortUtils";
 
 export default async function QuickSort(context: SortContextType) {
+  const { ascending, multiThread, partition, stats, setStats } = context;
+  const { swap, visualize, finalize } = context;
   let { heights } = context;
-  const { ascending, multiThread, partition, visualize, finalize } =
-    context;
+
   const pivots: number[] = [];
+  const startTime = Date.now();
+  let { comparisons, time } = stats;
+  (comparisons = 0), (time = 0);
 
   const medianOfThree = (low: number, mid: number, high: number) =>
     [heights[low], heights[mid], heights[high]].sort((x, y) => x - y)[1];
@@ -30,7 +34,12 @@ export default async function QuickSort(context: SortContextType) {
         heights = swap(heights, i, j);
         i++;
       }
+
+      comparisons++;
+      time = (Date.now() - startTime) / 1000;
+      setStats({ ...stats, comparisons, time });
     }
+
     heights = swap(heights, i, high);
     return i;
   };
@@ -38,28 +47,33 @@ export default async function QuickSort(context: SortContextType) {
   const hoarePartition = async (low: number, high: number, pivot: number) => {
     const mid = Math.floor((low + high) / 2);
     heights = swap(heights, heights.indexOf(pivot), mid);
-    let i = low;
-    let j = high;
+    let i = low - 1;
+    let j = high + 1;
 
-    // eslint-disable-next-line no-constant-condition
     while (true) {
       const pivotIndex = heights.indexOf(pivot);
       await visualizeStep(i, j, pivotIndex);
 
-      while (ascending ? heights[i] < pivot : heights[i] > pivot) {
+      do {
         i++;
+        comparisons++;
+        time = (Date.now() - startTime) / 1000;
+        setStats({ ...stats, comparisons, time });
         await visualizeStep(i, j, pivotIndex);
-      }
+      } while (
+        i <= high && ascending ? heights[i] < pivot : heights[i] > pivot
+      );
 
-      while (ascending ? heights[j] > pivot : heights[j] < pivot) {
+      do {
         j--;
+        comparisons++;
+        time = (Date.now() - startTime) / 1000;
+        setStats({ ...stats, comparisons, time });
         await visualizeStep(i, j, pivotIndex);
-      }
+      } while (j >= low && ascending ? heights[j] > pivot : heights[j] < pivot);
 
       if (i >= j) return j;
       heights = swap(heights, i, j);
-      i++;
-      j--;
     }
   };
 
@@ -86,5 +100,7 @@ export default async function QuickSort(context: SortContextType) {
   };
 
   await sort(0, heights.length - 1);
+  time = (Date.now() - startTime) / 1000;
+  setStats({ ...stats, comparisons, time });
   finalize(heights);
 }

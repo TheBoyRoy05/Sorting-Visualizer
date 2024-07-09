@@ -1,16 +1,24 @@
 import { SortContextType } from "../Utils/Props.ts";
-import { swap } from "../Utils/SortUtils.ts";
 
 export default async function SelectionSort(context: SortContextType) {
+  const { ascending, stats, setStats } = context;
+  const { swap, visualize, finalize } = context;
   let { heights } = context;
-  const { ascending, visualize, finalize } = context;
+
   const getNext = ascending ? Math.min : Math.max;
+  const startTime = Date.now();
+  let { comparisons, time } = stats;
+  (comparisons = 0), (time = 0);
 
   for (let i = 0; i < heights.length; i++) {
     let nextHeight = heights[i];
     let nextIndex = heights.slice(i).indexOf(nextHeight) + i;
 
     for (let j = i; j < heights.length; j++) {
+      comparisons++;
+      time = (Date.now() - startTime) / 1000;
+      setStats({ ...stats, comparisons, time });
+
       nextHeight = getNext(nextHeight, heights[j]);
       nextIndex = heights.slice(i).indexOf(nextHeight) + i;
       const status = {
@@ -20,9 +28,12 @@ export default async function SelectionSort(context: SortContextType) {
       };
       await visualize(heights, status);
     }
-
-    heights = swap(heights, i, nextIndex);
+    if (i != nextIndex) {
+      heights = swap(heights, i, nextIndex);
+    }
   }
 
+  time = (Date.now() - startTime) / 1000;
+  setStats({ ...stats, comparisons, time });
   await finalize(heights);
 }

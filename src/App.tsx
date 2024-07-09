@@ -27,6 +27,8 @@ const App: FC = () => {
     partition,
     setPartition,
     setBars,
+    stats,
+    setStats,
   } = useSortContext();
 
   const DISPLAY_WIDTH = 1000;
@@ -41,6 +43,7 @@ const App: FC = () => {
       status: "unsorted" as const,
     }));
     setBars(newBars);
+    setStats({ comparisons: 0, swaps: 0, time: 0 });
   };
 
   useEffect(() => {
@@ -92,6 +95,9 @@ const App: FC = () => {
         value={sortSpeed}
         setValue={setSortSpeed}
       />
+      <div className="stats">
+        <p className="stats-text">{`Statistics: ${stats.comparisons} Comparisons, ${stats.swaps} Swaps, ${stats.time} Sec`}</p>
+      </div>
       <Display />
     </div>
   );

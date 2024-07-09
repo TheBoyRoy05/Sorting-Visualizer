@@ -1,9 +1,13 @@
 import { SortContextType } from "../Utils/Props";
-import { shift, swap } from "../Utils/SortUtils";
 
 export default async function HeapSort(context: SortContextType) {
+  const { ascending, degree, stats, setStats } = context;
+  const { swap, shift, visualize, finalize } = context;
   let { heights } = context;
-  const { ascending, degree, visualize, finalize } = context;
+
+  const startTime = Date.now();
+  let { comparisons, time } = stats;
+  (comparisons = 0), (time = 0);
 
   const heapify = async () => {
     const parent = (index: number) =>
@@ -12,7 +16,12 @@ export default async function HeapSort(context: SortContextType) {
     const bubbleUp = async (index: number) => {
       await visualize(heights, { targets: [index] });
       if (parent(index) < 0) return;
+
+      comparisons++;
       if (heights[index] < heights[parent(index)] === ascending) {
+        time = (Date.now() - startTime) / 1000;
+        setStats({ ...stats, comparisons, time });
+
         heights = swap(heights, index, parent(index));
         await bubbleUp(parent(index));
       }
@@ -37,6 +46,9 @@ export default async function HeapSort(context: SortContextType) {
           sorting: heapStart,
         };
         await visualize(heights, status);
+        comparisons++;
+        time = (Date.now() - startTime) / 1000;
+        setStats({ ...stats, comparisons, time });
         if (heights[j] < heights[nextIdx] === ascending) nextIdx = j;
       }
 
@@ -47,6 +59,9 @@ export default async function HeapSort(context: SortContextType) {
       };
       heights = swap(heights, nextIdx, index);
       await visualize(heights, status);
+
+      time = (Date.now() - startTime) / 1000;
+      setStats({ ...stats, comparisons, time });
       await trickleDown(heapStart, nextIdx);
     };
 
@@ -61,5 +76,8 @@ export default async function HeapSort(context: SortContextType) {
 
   await heapify();
   await sort();
+
+  time = (Date.now() - startTime) / 1000;
+  setStats({ ...stats, comparisons, time });
   await finalize(heights);
 }
