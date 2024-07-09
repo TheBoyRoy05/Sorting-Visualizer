@@ -1,7 +1,7 @@
-import { useSortContext } from "../Utils/SortContext";
+import { SortContextType } from "../Utils/Props";
 
-export default async function BubbleSort() {
-  const { bars, ascending, swap, visualize, finalize } = useSortContext();
+export default async function BubbleSort(context: SortContextType) {
+  const { bars, ascending, swap, visualize, finalize } = context;
   const breakEarly = true;
   let heights = bars.map((bar) => bar.height);
 

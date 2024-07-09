@@ -1,7 +1,7 @@
-import { useSortContext } from "../Utils/SortContext";
+import { SortContextType } from "../Utils/Props";
 
-export default async function InsertionSort() {
-  const { bars, ascending, swap, visualize, finalize } = useSortContext();
+export default async function InsertionSort(context: SortContextType) {
+  const { bars, ascending, swap, visualize, finalize } = context;
   let heights = bars.map((bar) => bar.height);
 
   for (let i = 0; i < heights.length; i++) {

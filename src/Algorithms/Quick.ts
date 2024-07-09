@@ -1,8 +1,8 @@
-import { useSortContext } from "../Utils/SortContext";
+import { SortContextType } from "../Utils/Props";
 
-export default async function QuickSort() {
+export default async function QuickSort(context: SortContextType) {
   const { bars, ascending, multiThread, partition, swap, visualize, finalize } =
-    useSortContext();
+    context;
   let heights = bars.map((bar) => bar.height);
   const pivots: number[] = [];
 

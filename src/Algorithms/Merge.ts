@@ -1,8 +1,7 @@
-import { useSortContext } from "../Utils/SortContext";
+import { SortContextType } from "../Utils/Props";
 
-export default async function MergeSort() {
-  const { bars, ascending, multiThread, shift, visualize, finalize } =
-    useSortContext();
+export default async function MergeSort(context: SortContextType) {
+  const { bars, ascending, multiThread, shift, visualize, finalize } = context;
   let heights = bars.map((bar) => bar.height);
 
   const sort = async (start: number, end: number): Promise<void> => {

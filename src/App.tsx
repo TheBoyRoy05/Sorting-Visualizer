@@ -1,34 +1,41 @@
 import { FC } from "react";
 import Display from "./Components/Display";
 import Slider from "./Components/Slider";
-import SelectionSort from "./Algorithms/Selection";
-import InsertionSort from "./Algorithms/Insertion";
-import BubbleSort from "./Algorithms/Bubble";
-import MergeSort from "./Algorithms/Merge";
-import QuickSort from "./Algorithms/Quick";
-import HeapSort from "./Algorithms/Heap";
 import { useSortContext } from "./Utils/SortContext";
+import {
+  useBubbleSort,
+  useHeapSort,
+  useInsertionSort,
+  useMergeSort,
+  useQuickSort,
+  useSelectionSort,
+} from "./Algorithms/SortHooks";
 
 const App: FC = () => {
   const {
-    arraySize, setArraySize,
-    sortSpeed, setSortSpeed,
-    ascending, setAscending,
-    multiThread, setMultiThread,
-    partition, setPartition, 
-    generate
+    arraySize,
+    setArraySize,
+    sortSpeed,
+    setSortSpeed,
+    ascending,
+    setAscending,
+    multiThread,
+    setMultiThread,
+    partition,
+    setPartition,
+    generate,
   } = useSortContext();
 
   return (
     <div className="app">
       <div className="sorts">
         <p className="sorts-text">Sorts:</p>
-        <button onClick={() => SelectionSort()}>{"Selection"}</button>
-        <button onClick={() => InsertionSort()}>{"Insertion"}</button>
-        <button onClick={() => BubbleSort()}>{"Bubble"}</button>
-        <button onClick={() => HeapSort()}>{"Heap"}</button>
-        <button onClick={() => MergeSort()}>{"Merge"}</button>
-        <button onClick={() => QuickSort()}>{"Quick"}</button>
+        <button onClick={useSelectionSort()}>{"Selection"}</button>
+        <button onClick={useInsertionSort()}>{"Insertion"}</button>
+        <button onClick={useBubbleSort()}>{"Bubble"}</button>
+        <button onClick={useHeapSort()}>{"Heap"}</button>
+        <button onClick={useMergeSort()}>{"Merge"}</button>
+        <button onClick={useQuickSort()}>{"Quick"}</button>
       </div>
       <div className="options">
         <p className="options-text">Options: </p>
