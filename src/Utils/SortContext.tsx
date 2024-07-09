@@ -25,6 +25,7 @@ export const SortProvider: React.FC<{ children: React.ReactNode }> = ({
   const [multiThread, setMultiThread] = useState(false);
   const [partition, setPartition] = useState<partitionType>("Lomuto");
   const [degree, setDegree] = useState(2);
+  const [checkAnim, setCheckAnim] = useState(true);
   const [bars, setBars] = useState<BarProps[]>([]);
 
   const interval = Math.min(100 / bars.length / sortSpeed, 1) * 500;
@@ -59,6 +60,19 @@ export const SortProvider: React.FC<{ children: React.ReactNode }> = ({
     ];
   };
 
+  const checkSorted = async (heights: number[], runAnim = checkAnim) => {
+    for (let i = 0; i < heights.length; i++) {
+      if (runAnim) {
+        await visualize(heights, { selected: i, sorting: i });
+      }
+      if (heights[i] < heights[i - 1] == ascending && i != 0) {
+        await visualize(heights, { targets: i, sorting: i });
+        return false;
+      }
+    }
+    return true;
+  };
+
   const visualize = async (heights: number[], status: StatusProps) => {
     await new Promise<void>((resolve) => {
       const { targets, selected, sorting, sorted } = status;
@@ -89,14 +103,8 @@ export const SortProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const finalize = async (heights: number[]) => {
-    const sorted = heights
-      .slice(1)
-      .every((height, i) =>
-        ascending ? height >= heights[i] : height <= heights[i]
-      );
-
     await visualize(heights, { sorting: bars.length });
-    if (sorted) {
+    if (await checkSorted(heights)) {
       await visualize(heights, { sorted: bars.length });
     }
   };
@@ -120,12 +128,15 @@ export const SortProvider: React.FC<{ children: React.ReactNode }> = ({
         setPartition,
         degree,
         setDegree,
+        checkAnim,
+        setCheckAnim,
         bars,
         setBars,
         interval,
         generate,
         swap,
         shift,
+        checkSorted,
         visualize,
         finalize,
       }}

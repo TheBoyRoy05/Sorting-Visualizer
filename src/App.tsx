@@ -3,6 +3,7 @@ import Display from "./Components/Display";
 import Slider from "./Components/Slider";
 import { useSortContext } from "./Utils/SortContext";
 import {
+  useBozoSort,
   useBubbleSort,
   useHeapSort,
   useInsertionSort,
@@ -36,6 +37,7 @@ const App: FC = () => {
         <button onClick={useHeapSort()}>{"Heap"}</button>
         <button onClick={useMergeSort()}>{"Merge"}</button>
         <button onClick={useQuickSort()}>{"Quick"}</button>
+        <button onClick={useBozoSort()}>{"Bozo"}</button>
       </div>
       <div className="options">
         <p className="options-text">Options: </p>

@@ -41,12 +41,15 @@ export interface SortContextType {
   setPartition: (part: partitionType) => void;
   degree: number;
   setDegree: (deg: number) => void;
+  checkAnim: boolean;
+  setCheckAnim: (check: boolean) => void;
   bars: BarProps[];
   setBars: (bars: BarProps[]) => void;
   interval: number;
   generate: (size: number) => void;
   swap: (array: number[], i1: number, i2: number) => number[];
   shift: (array: number[], to: number, from: number) => number[];
+  checkSorted: (heights: number[], runAnim?: boolean) => Promise<boolean>;
   visualize: (heights: number[], status: StatusProps) => Promise<void>;
   finalize: (heights: number[]) => Promise<void>;
 }

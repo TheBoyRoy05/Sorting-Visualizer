@@ -6,6 +6,7 @@ import BubbleSort from "./Bubble";
 import HeapSort from "./Heap";
 import MergeSort from "./Merge";
 import QuickSort from "./Quick";
+import BozoSort from "./Bozo";
 
 export const useSelectionSort = () => {
   const context = useSortContext();
@@ -35,4 +36,9 @@ export const useMergeSort = () => {
 export const useQuickSort = () => {
   const context = useSortContext();
   return useCallback(async () => QuickSort(context), [context]);
+};
+
+export const useBozoSort = () => {
+  const context = useSortContext();
+  return useCallback(async () => BozoSort(context), [context]);
 };
