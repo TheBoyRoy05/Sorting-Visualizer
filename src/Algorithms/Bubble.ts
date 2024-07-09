@@ -1,9 +1,10 @@
 import { SortContextType } from "../Utils/Props";
+import { swap } from "../Utils/SortUtils";
 
 export default async function BubbleSort(context: SortContextType) {
-  const { bars, ascending, swap, visualize, finalize } = context;
+  let { heights } = context;
+  const { ascending, visualize, finalize } = context;
   const breakEarly = true;
-  let heights = bars.map((bar) => bar.height);
 
   for (let i = 1; i <= heights.length; i++) {
     let swapped = false;

@@ -1,7 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { FC, createContext, useContext, useState } from "react";
 import { BarProps, partitionType, SortContextType, StatusProps } from "./Props";
+import { checkSorted, finalize, visualize } from "./SortUtils";
 
 const SortContext = createContext<SortContextType | undefined>(undefined);
 
@@ -13,12 +13,9 @@ export const useSortContext = () => {
   return context;
 };
 
-export const SortProvider: React.FC<{ children: React.ReactNode }> = ({
+export const SortProvider: FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const DISPLAY_WIDTH = 1000;
-  const MAX_BAR_WIDTH = 100;
-
   const [arraySize, setArraySize] = useState(10);
   const [sortSpeed, setSortSpeed] = useState(10);
   const [ascending, setAscending] = useState(true);
@@ -28,120 +25,45 @@ export const SortProvider: React.FC<{ children: React.ReactNode }> = ({
   const [checkAnim, setCheckAnim] = useState(true);
   const [bars, setBars] = useState<BarProps[]>([]);
 
+  const heights = bars.map((bar) => bar.height);
   const interval = Math.min(100 / bars.length / sortSpeed, 1) * 500;
 
-  const getRandomInt = (min: number, max: number): number => {
-    return Math.floor(Math.random() * (max - min)) + min;
+  const state = {
+    arraySize,
+    setArraySize,
+    sortSpeed,
+    setSortSpeed,
+    ascending,
+    setAscending,
+    multiThread,
+    setMultiThread,
+    partition,
+    setPartition,
+    degree,
+    setDegree,
+    checkAnim,
+    setCheckAnim,
+    bars,
+    setBars,
+    heights,
+    interval,
   };
 
-  const generate = (size: number) => {
-    const newBars = Array.from({ length: size }, () =>
-      getRandomInt(10, 200)
-    ).map((height) => ({
-      height,
-      width: Math.min(DISPLAY_WIDTH / size, MAX_BAR_WIDTH),
-      status: "unsorted" as const,
-    }));
-    setBars(newBars);
-  };
+  const _visualize = (heights: number[], statusInfo: StatusProps) =>
+    visualize(heights, statusInfo, bars, interval, setBars);
+  const _checkSorted = (heights: number[], runAnim = checkAnim) =>
+    checkSorted(heights, ascending, runAnim, _visualize);
+  const _finalize = (heights: number[]) =>
+    finalize(heights, _checkSorted, _visualize);
 
-  const swap = (array: number[], i1: number, i2: number) => {
-    const newArray = [...array];
-    [newArray[i1], newArray[i2]] = [newArray[i2], newArray[i1]];
-    return newArray;
+  const context = {
+    ...state,
+    visualize: _visualize,
+    checkSorted: _checkSorted,
+    finalize: _finalize,
   };
-
-  const shift = (array: number[], to: number, from: number) => {
-    return [
-      ...array.slice(0, to),
-      array[from],
-      ...array.slice(to, from),
-      ...array.slice(from + 1),
-    ];
-  };
-
-  const checkSorted = async (heights: number[], runAnim = checkAnim) => {
-    for (let i = 0; i < heights.length; i++) {
-      if (runAnim) {
-        await visualize(heights, { selected: i, sorting: i });
-      }
-      if (heights[i] < heights[i - 1] == ascending && i != 0) {
-        await visualize(heights, { targets: i, sorting: i });
-        return false;
-      }
-    }
-    return true;
-  };
-
-  const visualize = async (heights: number[], status: StatusProps) => {
-    await new Promise<void>((resolve) => {
-      const { targets, selected, sorting, sorted } = status;
-      setTimeout(() => {
-        setBars(
-          heights.map((height, index) => ({
-            width: bars[index].width,
-            height: height,
-            status:
-              (typeof selected === "number" && index === selected) ||
-              (typeof selected === "object" && selected.includes(index))
-                ? "selected"
-                : (typeof targets === "number" && index === targets) ||
-                  (typeof targets === "object" && targets.includes(index))
-                ? "targeted"
-                : (typeof sorting === "number" && index < sorting) ||
-                  (typeof sorting === "object" && sorting.includes(index))
-                ? "sorting"
-                : (typeof sorted === "number" && index < sorted) ||
-                  (typeof sorted === "object" && sorted.includes(index))
-                ? "sorted"
-                : "unsorted",
-          }))
-        );
-        resolve();
-      }, interval);
-    });
-  };
-
-  const finalize = async (heights: number[]) => {
-    await visualize(heights, { sorting: bars.length });
-    if (await checkSorted(heights)) {
-      await visualize(heights, { sorted: bars.length });
-    }
-  };
-
-  useEffect(() => {
-    generate(arraySize);
-  }, [arraySize]);
 
   return (
-    <SortContext.Provider
-      value={{
-        arraySize,
-        setArraySize,
-        sortSpeed,
-        setSortSpeed,
-        ascending,
-        setAscending,
-        multiThread,
-        setMultiThread,
-        partition,
-        setPartition,
-        degree,
-        setDegree,
-        checkAnim,
-        setCheckAnim,
-        bars,
-        setBars,
-        interval,
-        generate,
-        swap,
-        shift,
-        checkSorted,
-        visualize,
-        finalize,
-      }}
-    >
-      {children}
-    </SortContext.Provider>
+    <SortContext.Provider value={context}>{children}</SortContext.Provider>
   );
 };

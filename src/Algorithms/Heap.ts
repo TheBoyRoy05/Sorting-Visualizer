@@ -1,8 +1,9 @@
 import { SortContextType } from "../Utils/Props";
+import { shift, swap } from "../Utils/SortUtils";
 
 export default async function HeapSort(context: SortContextType) {
-  const { bars, ascending, degree, swap, shift, visualize, finalize } = context;
-  let heights = bars.map((bar) => bar.height);
+  let { heights } = context;
+  const { ascending, degree, visualize, finalize } = context;
 
   const heapify = async () => {
     const parent = (index: number) =>

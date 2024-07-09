@@ -45,11 +45,17 @@ export interface SortContextType {
   setCheckAnim: (check: boolean) => void;
   bars: BarProps[];
   setBars: (bars: BarProps[]) => void;
+  heights: number[];
   interval: number;
-  generate: (size: number) => void;
-  swap: (array: number[], i1: number, i2: number) => number[];
-  shift: (array: number[], to: number, from: number) => number[];
-  checkSorted: (heights: number[], runAnim?: boolean) => Promise<boolean>;
   visualize: (heights: number[], status: StatusProps) => Promise<void>;
-  finalize: (heights: number[]) => Promise<void>;
+  checkSorted: (
+    heights: number[],
+    checkAnim: boolean,
+    visualize: (heights: number[], statusInfo: StatusProps) => Promise<void>
+  ) => Promise<boolean>;
+  finalize: (
+    heights: number[],
+    checkSorted: (heights: number[], checkAnim: boolean) => Promise<boolean>,
+    visualize: (heights: number[], statusInfo: StatusProps) => Promise<void>
+  ) => Promise<void>;
 }

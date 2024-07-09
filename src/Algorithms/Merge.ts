@@ -1,8 +1,9 @@
 import { SortContextType } from "../Utils/Props";
+import { shift } from "../Utils/SortUtils";
 
 export default async function MergeSort(context: SortContextType) {
-  const { bars, ascending, multiThread, shift, visualize, finalize } = context;
-  let heights = bars.map((bar) => bar.height);
+  let { heights } = context;
+  const { ascending, multiThread, visualize, finalize } = context;
 
   const sort = async (start: number, end: number): Promise<void> => {
     if (end - start <= 1) return;
@@ -33,6 +34,6 @@ export default async function MergeSort(context: SortContextType) {
     }
   };
 
-  await sort(0, bars.length);
+  await sort(0, heights.length);
   await finalize(heights);
 }

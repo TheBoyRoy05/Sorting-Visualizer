@@ -1,9 +1,10 @@
 import { SortContextType } from "../Utils/Props";
+import { swap } from "../Utils/SortUtils";
 
 export default async function QuickSort(context: SortContextType) {
-  const { bars, ascending, multiThread, partition, swap, visualize, finalize } =
+  let { heights } = context;
+  const { ascending, multiThread, partition, visualize, finalize } =
     context;
-  let heights = bars.map((bar) => bar.height);
   const pivots: number[] = [];
 
   const medianOfThree = (low: number, mid: number, high: number) =>
@@ -84,6 +85,6 @@ export default async function QuickSort(context: SortContextType) {
     }
   };
 
-  await sort(0, bars.length - 1);
+  await sort(0, heights.length - 1);
   finalize(heights);
 }

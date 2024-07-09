@@ -1,7 +1,9 @@
-import { FC } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { FC, useEffect } from "react";
 import Display from "./Components/Display";
 import Slider from "./Components/Slider";
 import { useSortContext } from "./Utils/SortContext";
+import { getRandomInt } from "./Utils/SortUtils";
 import {
   useBozoSort,
   useBubbleSort,
@@ -24,8 +26,26 @@ const App: FC = () => {
     setMultiThread,
     partition,
     setPartition,
-    generate,
+    setBars,
   } = useSortContext();
+
+  const DISPLAY_WIDTH = 1000;
+  const MAX_BAR_WIDTH = 100;
+
+  const generate = (size: number) => {
+    const newBars = Array.from({ length: size }, () =>
+      getRandomInt(10, 200)
+    ).map((height) => ({
+      height,
+      width: Math.min(DISPLAY_WIDTH / size, MAX_BAR_WIDTH),
+      status: "unsorted" as const,
+    }));
+    setBars(newBars);
+  };
+
+  useEffect(() => {
+    generate(arraySize);
+  }, [arraySize]);
 
   return (
     <div className="app">

@@ -1,8 +1,9 @@
 import { SortContextType } from "../Utils/Props";
+import { swap } from "../Utils/SortUtils";
 
 export default async function InsertionSort(context: SortContextType) {
-  const { bars, ascending, swap, visualize, finalize } = context;
-  let heights = bars.map((bar) => bar.height);
+  let { heights } = context;
+  const { ascending, visualize, finalize } = context;
 
   for (let i = 0; i < heights.length; i++) {
     await visualize(heights, { targets: i, sorting: i + 1 });

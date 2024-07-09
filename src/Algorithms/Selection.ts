@@ -1,9 +1,10 @@
 import { SortContextType } from "../Utils/Props.ts";
+import { swap } from "../Utils/SortUtils.ts";
 
 export default async function SelectionSort(context: SortContextType) {
-  const { bars, ascending, swap, visualize, finalize } = context;
+  let { heights } = context;
+  const { ascending, visualize, finalize } = context;
   const getNext = ascending ? Math.min : Math.max;
-  let heights = bars.map((bar) => bar.height);
 
   for (let i = 0; i < heights.length; i++) {
     let nextHeight = heights[i];
