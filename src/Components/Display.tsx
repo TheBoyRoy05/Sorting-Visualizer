@@ -1,14 +1,17 @@
 import { FC } from "react";
 import { BarProps } from "../Utils/Props";
 import { useSortContext } from "../Utils/SortContext";
+import "../Styles/display.css"
 
 const Bar: FC<BarProps> = ({ width, height, status }) => {
+  const { barsOnTop } = useSortContext();
   const style = {
     height: `${height}px`,
     width: `${width}px`,
   };
+  const barPos = barsOnTop ? " top" : " bottom"
   return (
-    <div className={"bar " + status} style={style}>
+    <div className={"bar " + status + barPos} style={style}>
       <p className="bar-text">{width > 30 ? height : ""}</p>
     </div>
   );
@@ -17,7 +20,7 @@ const Bar: FC<BarProps> = ({ width, height, status }) => {
 const Display: FC = () => {
   const { bars } = useSortContext();
   return (
-    <div className="display">
+    <div className={"display"}>
       {bars.map((bar, index) => (
         <Bar key={index} {...bar} />
       ))}

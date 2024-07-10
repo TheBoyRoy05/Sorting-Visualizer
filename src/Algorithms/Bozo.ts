@@ -1,5 +1,5 @@
 import { SortContextType } from "../Utils/Props";
-import { getRandomInt } from "../Utils/SortUtils";
+import { getRandomInt } from "../Utils/AppUtils";
 
 export default async function BozoSort(context: SortContextType) {
   const { stats, setStats, swap, checkSorted, visualize } = context;

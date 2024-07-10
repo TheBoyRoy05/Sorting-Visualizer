@@ -3,23 +3,22 @@ import { FC, useEffect } from "react";
 import Display from "./Components/Display";
 import Slider from "./Components/Slider";
 import { useSortContext } from "./Utils/SortContext";
-import { getRandomInt } from "./Utils/SortUtils";
-import {
-  useBozoSort,
-  useBubbleSort,
-  useHeapSort,
-  useInsertionSort,
-  useMergeSort,
-  useQuickSort,
-  useSelectionSort,
-} from "./Algorithms/SortHooks";
+import { getRandomInt } from "./Utils/AppUtils";
+import Dashboard from "./Components/Dashboard";
+import "./Styles/index.css";
 
 const App: FC = () => {
   const {
     arraySize,
     setArraySize,
+    barsOnTop,
+    setBarsOnTop,
     sortSpeed,
     setSortSpeed,
+    sort,
+  } = useSortContext();
+
+  const {
     ascending,
     setAscending,
     multiThread,
@@ -52,31 +51,32 @@ const App: FC = () => {
 
   return (
     <div className="app">
-      <div className="sorts">
-        <p className="sorts-text">Sorts:</p>
-        <button onClick={useSelectionSort()}>{"Selection"}</button>
-        <button onClick={useInsertionSort()}>{"Insertion"}</button>
-        <button onClick={useBubbleSort()}>{"Bubble"}</button>
-        <button onClick={useHeapSort()}>{"Heap"}</button>
-        <button onClick={useMergeSort()}>{"Merge"}</button>
-        <button onClick={useQuickSort()}>{"Quick"}</button>
-        <button onClick={useBozoSort()}>{"Bozo"}</button>
-      </div>
-      <div className="options">
-        <p className="options-text">Options: </p>
-        <button onClick={() => generate(arraySize)}>{"Generate"}</button>
+      <Dashboard />
+      <div className="sort-options">
+        <p className="sort-options-text">Sort Options: </p>
         <button onClick={() => setAscending(!ascending)}>
           {ascending ? "Ascending" : "Descending"}
         </button>
-        <button onClick={() => setMultiThread(!multiThread)}>
+        <button
+          className={sort == "merge" || sort == "quick" ? "" : "hide"}
+          onClick={() => setMultiThread(!multiThread)}
+        >
           {multiThread ? "Multi-Thread" : "Single Thread"}
         </button>
         <button
+          className={sort == "quick" ? "" : "hide"}
           onClick={() =>
-            setPartition(partition === "Lomuto" ? "Hoare" : "Lomuto")
+            setPartition(partition == "Lomuto" ? "Hoare" : "Lomuto")
           }
         >
           {partition}
+        </button>
+      </div>
+      <div className="other-options">
+        <p className="other-options-text">Other Options: </p>
+        <button onClick={() => generate(arraySize)}>{"Generate"}</button>
+        <button onClick={() => setBarsOnTop(!barsOnTop)}>
+          {"Bars on " + (barsOnTop ? "Top" : "Bottom")}
         </button>
       </div>
       <Slider

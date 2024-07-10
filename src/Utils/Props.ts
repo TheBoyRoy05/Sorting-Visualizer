@@ -4,7 +4,17 @@ export type statusType =
   | "selected"
   | "sorting"
   | "sorted";
+
 export type partitionType = "Lomuto" | "Hoare";
+
+export type sortType =
+  | "selection"
+  | "bubble"
+  | "insertion"
+  | "heap"
+  | "quick"
+  | "merge"
+  | "bozo";
 
 export interface BarProps {
   width: number;
@@ -37,8 +47,13 @@ export interface StatusProps {
 export interface SortContextType {
   arraySize: number;
   setArraySize: (size: number) => void;
+  barsOnTop: boolean;
+  setBarsOnTop: (top: boolean) => void;
   sortSpeed: number;
   setSortSpeed: (speed: number) => void;
+  sort: sortType;
+  setSort: (sort: sortType) => void;
+
   ascending: boolean;
   setAscending: (asc: boolean) => void;
   multiThread: boolean;
@@ -55,6 +70,7 @@ export interface SortContextType {
   setStats: (stats: StatsProps) => void;
   heights: number[];
   interval: number;
+
   swap: (array: number[], i1: number, i2: number) => number[];
   shift: (array: number[], to: number, from: number) => number[];
   checkSorted: (heights: number[], runAnim?: boolean) => Promise<boolean>;

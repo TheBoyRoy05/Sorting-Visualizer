@@ -1,0 +1,10 @@
+.dashboard {
+    display: flex;
+    background-color: rgb(62, 129, 173);
+    margin: 0;
+}
+
+.title {
+    color: white;
+    margin: 20px;
+}

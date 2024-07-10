@@ -1,7 +1,21 @@
+.display, .bar {
+    display: flex;
+    justify-content: center;
+}
+
 .bar {
     border-radius: 5px;
-    text-align: center;
     margin: 0;
+}
+
+.top {
+    align-self: start;
+    align-items: start;
+}
+
+.bottom {
+    align-self: end;
+    align-items: end;
 }
 
 .unsorted {
@@ -24,6 +38,6 @@
     background-color: rgb(64, 240, 102);
 }
 
-.display, .slider {
-    display: flex;
+.hide {
+    display: none;
 }

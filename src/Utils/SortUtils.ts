@@ -1,9 +1,5 @@
 import { StatusProps, BarProps, StatsProps } from "./Props";
 
-export const getRandomInt = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
 export const swap = (
   array: number[],
   i1: number,
@@ -43,7 +39,8 @@ export const checkSorted = async (
       await visualize(heights, { selected: i, sorting: i });
     }
     stats.comparisons++;
-    if (heights[i] < heights[i - 1] == ascending && i != 0) {
+    const wrongOrder = heights[i] < heights[i-1] == ascending;
+    if (i != 0 && heights[i] != heights[i-1] && wrongOrder) {
       await visualize(heights, { targets: [i, i - 1], sorting: i });
       return false;
     }

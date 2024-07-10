@@ -1,0 +1,15 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.slider-container {
+    display: flex;
+}
+
+.slider-input {
+    border: none;
+    width: 50px;
+    height: 20px;
+    align-self: center;
+}

@@ -4,6 +4,7 @@ import {
   BarProps,
   partitionType,
   SortContextType,
+  sortType,
   StatsProps,
   StatusProps,
 } from "./Props";
@@ -21,7 +22,10 @@ export const useSortContext = () => {
 
 export const SortProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [arraySize, setArraySize] = useState(10);
+  const [barsOnTop, setBarsOnTop] = useState(true);
   const [sortSpeed, setSortSpeed] = useState(10);
+  const [sort, setSort] = useState<sortType>("selection");
+
   const [ascending, setAscending] = useState(true);
   const [multiThread, setMultiThread] = useState(false);
   const [partition, setPartition] = useState<partitionType>("Lomuto");
@@ -37,11 +41,29 @@ export const SortProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const heights = bars.map((bar) => bar.height);
   const interval = Math.min(100 / bars.length / sortSpeed, 1) * 500;
 
-  const state = {
+  const _swap = (array: number[], i1: number, i2: number) =>
+    swap(array, i1, i2, stats);
+  const _shift = (array: number[], to: number, from: number) =>
+    shift(array, to, from, stats);
+  const _visualize = (heights: number[], statusInfo: StatusProps) =>
+    visualize(heights, statusInfo, bars, interval, setBars);
+  const _checkSorted = (heights: number[], runAnim = checkAnim) =>
+    checkSorted(heights, ascending, runAnim, stats, _visualize);
+  const _finalize = (heights: number[]) =>
+    finalize(heights, _checkSorted, _visualize);
+
+  const appState = {
     arraySize,
     setArraySize,
+    barsOnTop,
+    setBarsOnTop,
     sortSpeed,
     setSortSpeed,
+    sort,
+    setSort
+  }
+
+  const sortState = {
     ascending,
     setAscending,
     multiThread,
@@ -60,24 +82,18 @@ export const SortProvider: FC<{ children: ReactNode }> = ({ children }) => {
     interval,
   };
 
-  const _swap = (array: number[], i1: number, i2: number) =>
-    swap(array, i1, i2, stats);
-  const _shift = (array: number[], to: number, from: number) =>
-    shift(array, to, from, stats);
-  const _visualize = (heights: number[], statusInfo: StatusProps) =>
-    visualize(heights, statusInfo, bars, interval, setBars);
-  const _checkSorted = (heights: number[], runAnim = checkAnim) =>
-    checkSorted(heights, ascending, runAnim, stats, _visualize);
-  const _finalize = (heights: number[]) =>
-    finalize(heights, _checkSorted, _visualize);
-
-  const context = {
-    ...state,
+  const functions = {
     swap: _swap,
     shift: _shift,
     visualize: _visualize,
     checkSorted: _checkSorted,
     finalize: _finalize,
+  }
+
+  const context = {
+    ...appState,
+    ...sortState,
+    ...functions
   };
 
   return (
