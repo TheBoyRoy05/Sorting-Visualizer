@@ -11,7 +11,7 @@ const Bar: FC<BarProps> = ({ width, height, status }) => {
   };
   const barPos = barsOnTop ? " top" : " bottom"
   return (
-    <div className={"bar " + status + barPos} style={style}>
+    <div className={"bar bar-" + status + barPos} style={style}>
       <p className="bar-text">{width > 30 ? height : ""}</p>
     </div>
   );

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { sortType } from "../Utils/Props";
+import { goofySortType, normalSortType, optionType } from "../Utils/Props";
 import { useSortContext } from "../Utils/SortContext";
 import { capitalize } from "../Utils/AppUtils";
 import {
@@ -11,10 +11,11 @@ import {
   useQuickSort,
   useSelectionSort,
 } from "../Algorithms/SortHooks";
-import "../Styles/dashboard.css"
+import "../Styles/dashboard.css";
+import Dropdown from "./Dropdown";
 
 const Dashboard: FC = () => {
-  const {sort, setSort} = useSortContext();
+  const { sort, setSort } = useSortContext();
 
   const selectionSort = useSelectionSort();
   const bubbleSort = useBubbleSort();
@@ -43,29 +44,37 @@ const Dashboard: FC = () => {
     }
   };
 
+  const normalSorts: normalSortType[] = [
+    "selection",
+    "bubble",
+    "insertion",
+    "heap",
+    "quick",
+    "merge",
+  ];
+  const goofySorts: goofySortType[] = ["bozo"];
+
+  const sortOptions: optionType[] = [
+    ...normalSorts.map((sort) => ({
+      text: capitalize(sort),
+      handleClick: () => setSort(sort),
+    })),
+    { text: "Goofy Ahh Sorts" },
+    ...goofySorts.map((sort) => ({
+      text: capitalize(sort),
+      handleClick: () => setSort(sort),
+    })),
+  ];
+
   return (
     <div className="dashboard">
-      <p className="title">Sorting Visualizer</p>
-      <select
-        className="sorts"
-        value={sort}
-        onChange={(e) => setSort(e.target.value as sortType)}
-      >
-        <option disabled={true}>Normal Sorts:</option>
-        <option value="selection">{"Selection"}</option>
-        <option value="bubble">{"Bubble"}</option>
-        <option value="insertion">{"Insertion"}</option>
-        <option value="heap">{"Heap"}</option>
-        <option value="quick">{"Quick"}</option>
-        <option value="merge">{"Merge"}</option>
-        <option disabled={true}>Goofy Ahh Sorts:</option>
-        <option value="bozo">{"Bozo"}</option>
-      </select>
-      <button onClick={handleSort}>
+      <h2 className="title">Sorting Visualizer</h2>
+      <Dropdown text="Sorting Algorithms" options={sortOptions} />
+      <button className="btn main-btn" onClick={handleSort}>
         {"Visualize " + capitalize(sort) + " Sort!"}
       </button>
     </div>
-  )
+  );
 };
 
 export default Dashboard;

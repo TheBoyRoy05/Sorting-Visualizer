@@ -18,23 +18,23 @@
     align-items: end;
 }
 
-.unsorted {
+.bar-unsorted {
     background-color: rgb(102, 157, 230);
 }
 
-.targeted {
+.bar-targeted {
     background-color: rgb(240, 93, 93);
 }
 
-.selected {
+.bar-selected {
     background-color: rgb(252, 202, 111);
 }
 
-.sorting {
+.bar-sorting {
     background-color: rgb(237, 143, 240);
 }
 
-.sorted {
+.bar-sorted {
     background-color: rgb(64, 240, 102);
 }
 

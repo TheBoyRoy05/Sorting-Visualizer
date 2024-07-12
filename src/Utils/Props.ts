@@ -7,14 +7,22 @@ export type statusType =
 
 export type partitionType = "Lomuto" | "Hoare";
 
-export type sortType =
+export type normalSortType =
   | "selection"
   | "bubble"
   | "insertion"
   | "heap"
   | "quick"
-  | "merge"
-  | "bozo";
+  | "merge";
+
+export type goofySortType = "bozo";
+
+export type sortType = normalSortType | goofySortType;
+
+export type optionType = {
+  text: string;
+  handleClick?: () => void;
+};
 
 export interface BarProps {
   width: number;
@@ -35,6 +43,11 @@ export interface SliderProps {
   step: number;
   value: number;
   setValue: (value: number) => void;
+}
+
+export interface DropdownProps {
+  text: string;
+  options: optionType[];
 }
 
 export interface StatusProps {
