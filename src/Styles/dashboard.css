@@ -5,18 +5,18 @@
   align-items: center;
   background-color: #3c6683;
   margin: 0;
-  padding: 10px 0;
+  padding: 20px 0;
 }
 
 .title {
   color: white;
-  margin: 20px;
+  margin: 0 15px 0 20px;
 }
 
 .dropdown {
   position: relative;
-  margin: auto 0;
-  margin-right: 1rem;
+  margin: auto 0.5rem;
+  min-width: 110px;
 }
 
 .dropdown-text-container {
@@ -27,6 +27,8 @@
   font-weight: bold;
   color: white;
   padding-left: 0.6rem;
+  width: 100%;
+  justify-content: center;
 }
 
 .options {
@@ -36,6 +38,8 @@
   flex-direction: column;
   width: 100%;
   padding: 0.3rem 0;
+  border: inset 0 0 0 1px solid white;
+  border-radius: 5px;
 }
 
 .option, .disabled {
@@ -103,5 +107,5 @@
   height: 45px;
   font-size: 0.9rem;
   font-weight: bold;
-  box-shadow: 0 0 0 3px white;
+  border: 3px solid white;
 }
