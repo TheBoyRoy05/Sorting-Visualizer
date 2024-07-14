@@ -14,12 +14,16 @@ import {
 } from "../Algorithms/SortHooks";
 import "../Styles/dashboard.css";
 import Dropdown from "./Dropdown";
+import Slider from "./Slider";
 
 const Dashboard: FC = () => {
   const {
     sort,
     setSort,
     arraySize,
+    setArraySize,
+    sortSpeed,
+    setSortSpeed,
     ascending,
     setAscending,
     multiThread,
@@ -28,6 +32,8 @@ const Dashboard: FC = () => {
     setPartition,
     setBars,
     setStats,
+    barsOnTop,
+    setBarsOnTop,
     swap,
   } = useSortContext();
 
@@ -62,16 +68,21 @@ const Dashboard: FC = () => {
   const DISPLAY_WIDTH = 1000;
   const MAX_BAR_WIDTH = 100;
 
-  const generateRandom = () => {
+  const createBars = (heights: number[]) => {
     setBars(
-      Array.from({ length: arraySize }, () => getRandomInt(10, 200)).map(
-        (height) => ({
-          height,
-          width: Math.min(DISPLAY_WIDTH / arraySize, MAX_BAR_WIDTH),
-          status: "unsorted",
-        })
-      )
+      heights.map((height) => ({
+        height,
+        width: Math.min(DISPLAY_WIDTH / arraySize, MAX_BAR_WIDTH),
+        status: "unsorted",
+      }))
     );
+  };
+
+  const generateRandom = () => {
+    const heights = Array.from({ length: arraySize }, () =>
+      getRandomInt(10, 200)
+    );
+    createBars(heights);
   };
 
   const generateNearlySorted = () => {
@@ -85,13 +96,15 @@ const Dashboard: FC = () => {
         getRandomInt(0, arraySize)
       );
     }
-    setBars(
-      heights.map((height) => ({
-        height,
-        width: Math.min(DISPLAY_WIDTH / arraySize, MAX_BAR_WIDTH),
-        status: "unsorted",
-      }))
-    );
+    createBars(heights);
+  };
+
+  const generateReverse = () => {
+    const heights = Array.from({ length: arraySize }, () =>
+      getRandomInt(10, 200)
+    ).sort((a, b) => a - b);
+    if (ascending) heights.reverse();
+    createBars(heights);
   };
 
   useEffect(() => {
@@ -108,7 +121,7 @@ const Dashboard: FC = () => {
   ];
   const goofySorts: goofySortType[] = ["bozo"];
 
-  const sortOptions: optionType[] = [
+  const algorithms: optionType[] = [
     ...normalSorts.map((sort) => ({
       text: capitalize(sort),
       handleClick: () => setSort(sort),
@@ -120,26 +133,6 @@ const Dashboard: FC = () => {
     })),
   ];
 
-  const options: optionType[] = [
-  {
-    text: ascending ? "Ascending" : "Descending",
-    handleClick: () => setAscending(!ascending),
-  },
-  ...(sort === "merge" || sort === "quick"
-    ? [{
-        text: multiThread ? "Multi-Thread" : "Single Thread",
-        handleClick: () => setMultiThread(!multiThread),
-      }]
-    : []),
-  ...(sort === "quick"
-    ? [{
-        text: partition,
-        handleClick: () =>
-          setPartition(partition === "Lomuto" ? "Hoare" : "Lomuto"),
-      }]
-    : []),
-  ];
-
   const generateOptions: optionType[] = [
     {
       text: "Random",
@@ -149,17 +142,71 @@ const Dashboard: FC = () => {
       text: "Nearly Sorted",
       handleClick: () => generateNearlySorted(),
     },
+    {
+      text: "Reverse",
+      handleClick: () => generateReverse(),
+    },
+  ];
+
+  const sortOptions: optionType[] = [
+    {
+      text: ascending ? "Ascending" : "Descending",
+      handleClick: () => setAscending(!ascending),
+    },
+    ...(sort === "merge" || sort === "quick"
+      ? [
+          {
+            text: multiThread ? "Multi-Thread" : "Single Thread",
+            handleClick: () => setMultiThread(!multiThread),
+          },
+        ]
+      : []),
+    ...(sort === "quick"
+      ? [
+          {
+            text: partition,
+            handleClick: () =>
+              setPartition(partition === "Lomuto" ? "Hoare" : "Lomuto"),
+          },
+        ]
+      : []),
+  ];
+
+  const settings: optionType[] = [
+    {
+      text: "Bars on " + (barsOnTop ? "Top" : "Bottom"),
+      handleClick: () => setBarsOnTop(!barsOnTop),
+    },
   ];
 
   return (
     <div className="dashboard">
       <h2 className="title">Sorting Visualizer</h2>
-      <Dropdown text="Sorting Algorithms" options={sortOptions} />
-      <Dropdown text="Options" options={options} />
-      <button className="btn main-btn" onClick={handleSort}>
-        {"Visualize " + capitalize(sort) + " Sort!"}
-      </button>
-      <Dropdown text="Generate" options={generateOptions} />
+      <div className="board">
+        <Slider
+          text="Array Size"
+          min={4}
+          max={100}
+          step={1}
+          value={arraySize}
+          setValue={setArraySize}
+        />
+        <Dropdown text="Sorting Algorithms" options={algorithms} />
+        <Dropdown text="Generate" options={generateOptions} />
+        <button className="btn main-btn" onClick={handleSort}>
+          {"Visualize " + capitalize(sort) + " Sort!"}
+        </button>
+        <Dropdown text="Sort Options" options={sortOptions} />
+        <Dropdown text="Settings" options={settings} />
+        <Slider
+          text="Sort Speed"
+          min={1}
+          max={100}
+          step={1}
+          value={sortSpeed}
+          setValue={setSortSpeed}
+        />
+      </div>
     </div>
   );
 };

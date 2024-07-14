@@ -1,15 +1,16 @@
 import { FC, useState } from "react";
 import { DropdownProps } from "../Utils/Props";
+import "../Styles/dropdown.css"
 
 const Dropdown: FC<DropdownProps> = ({ text, options }) => {
   const [selected, setSelected] = useState(false);
 
   return (
-    <div className="dropdown">
+    <div className={"dropdown " + text.toLowerCase().replace(" ", "")}>
       <button
         className={
           "dropdown-text-container btn " +
-          (selected ? "show-button" : "hide-button")
+          (selected ? "show-dropdown" : "hide-dropdown")
         }
         onClick={() => setSelected(!selected)}
       >

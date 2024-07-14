@@ -1,0 +1,21 @@
+.slider-container {
+  display: flex;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+  font-weight: bold;
+}
+
+.slider-input {
+  border: none;
+  width: 50px;
+  height: 20px;
+  align-self: center;
+  background-color: var(--dash-bg);
+  color: white;
+}
+
+.slider-input:focus {
+  background-color: white;
+  color: black
+}

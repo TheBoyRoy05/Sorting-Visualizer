@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { SliderProps } from "../Utils/Props";
+import "../Styles/slider.css"
 
 const Slider: FC<SliderProps> = ({ min, max, step, text, value, setValue }) => {
   return (
-    <div className="slider-container">
+    <div className={"slider-container " + text.toLowerCase().replace(" ", "")}>
       <p className="slider-text">{text}</p>
       <input
         className="slider"

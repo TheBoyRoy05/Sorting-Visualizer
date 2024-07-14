@@ -1,111 +1,79 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
-.dashboard {
+.dashboard, .board {
   display: flex;
   align-items: center;
-  background-color: #3c6683;
+  justify-content: center;
+  background-color: var(--dash-bg);
+}
+
+.dashboard {
   margin: 0;
   padding: 20px 0;
+  position: relative;
+}
+
+.board {
+  flex-grow: 1;
 }
 
 .title {
   color: white;
   margin: 0 15px 0 20px;
-}
-
-.dropdown {
-  position: relative;
-  margin: auto 0.5rem;
-  min-width: 110px;
-}
-
-.dropdown-text-container {
-  display: flex;
-  border: none;
-  border-radius: 5px;
-  font-size: small;
-  font-weight: bold;
-  color: white;
-  padding-left: 0.6rem;
-  width: 100%;
-  justify-content: center;
-}
-
-.options {
-  background-color: #3c6683;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 0.3rem 0;
-  border: inset 0 0 0 1px solid white;
-  border-radius: 5px;
-}
-
-.option, .disabled {
-  background-color: transparent;
-  transition: background-color 0.1s linear;
-  border: none;
-  margin: 0.1rem;
-  color: white;
-}
-
-.option:hover {
-  background-color: #1cbc9c;
-  transition: background-color 0.1s linear;
-  border-radius: 0.3rem;
-}
-
-.disabled {
-  color: rgb(214, 214, 214);
-  font-family: "Bebas Neue", sans-serif;
-  font-weight: normal;
-  font-size: 1.2rem;
-  margin-top: 0.4rem;
-  line-height: 1rem;
-}
-
-.show-button {
-  background-color: #1cbc9c;
-  transition: background-color 0.2s linear;
-}
-
-.hide-button {
-  background-color: transparent;
-  transition: background-color 0.2s linear;
-}
-
-.hide-button:hover {
-  color: #22ebc2;
-  transition: color 0.15s linear;
-}
-
-.arrow-up,
-.arrow-down {
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  margin: auto;
-  margin-left: 0.7rem;
-  margin-right: 0.3rem;
-}
-
-.arrow-up {
-  border-bottom: 7px solid white;
-}
-
-.arrow-down {
-  border-top: 7px solid #bebebe;
+  flex-shrink: 0;
 }
 
 .main-btn {
-  background-color: #1cbc9c;
+  background-color: var(--teal);
   border: 1px solid white;
   border: none;
   border-radius: 5px;
   color: white;
   width: 170px;
-  height: 45px;
+  height: 50px;
   font-size: 0.9rem;
   font-weight: bold;
   border: 3px solid white;
+}
+
+@media (max-width: 1200px) {
+  .board {
+    flex-wrap: wrap;
+  }
+
+  .arraysize {
+    order: 6;
+  }
+
+  .sortspeed {
+    order: 7;
+  }
+}
+
+@media (max-width: 960px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .title {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 735px) {
+  .generate {
+    order: 3;
+  }
+
+  .sortoptions {
+    order: 4;
+  }
+
+  .settings {
+    order: 5;
+  }
+
+  .board {
+    width: 65%;
+  }
 }
