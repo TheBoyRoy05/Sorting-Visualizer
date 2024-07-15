@@ -2,7 +2,7 @@
 import { FC } from "react";
 import Dashboard from "./Components/Dashboard";
 import Display from "./Components/Display";
-import Footer from "./Components/Footer";
+import InfoCards from "./Components/InfoCards";
 import "./Styles/index.css";
 
 const App: FC = () => {
@@ -10,7 +10,7 @@ const App: FC = () => {
     <div className="app">
       <Dashboard />
       <Display />
-      <Footer />
+      <InfoCards />
     </div>
   );
 };

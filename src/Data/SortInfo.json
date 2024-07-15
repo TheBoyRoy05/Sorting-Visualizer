@@ -1,51 +1,65 @@
 {
   "selection": {
     "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
+    "link": "https://en.wikipedia.org/wiki/Selection_sort",
     "bestTime": "Ω(n^2)",
-    "averageTime": "Ω(n^2)",
-    "wortTime": "Ω(n^2)",
-    "space": "O(1)"
+    "averageTime": "Θ(n^2)",
+    "wortTime": "O(n^2)",
+    "space": "O(1)",
+    "stable": "No"
   },
   "bubble": {
-    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
-    "bestTime": "Ω(n^2)",
-    "averageTime": "Ω(n^2)",
-    "wortTime": "Ω(n^2)",
-    "space": "O(1)"
+    "description": "Bubble Sort is a simple sorting algorithm which runs through a list, comparing adjacent values, and performing swaps when necessary. The algorithm effectively allows the later elements to 'bubble' up towards the end of the list while the earlier items are being sorted. This algorithm performs poorly with large lists so it's primary used as an educational tool.",
+    "link": "https://en.wikipedia.org/wiki/Bubble_sort",
+    "bestTime": "Ω(n)",
+    "averageTime": "Θ(n^2)",
+    "wortTime": "O(n^2)",
+    "space": "O(1)",
+    "stable": "Yes"
   },
   "insertion": {
-    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
-    "bestTime": "Ω(n^2)",
-    "averageTime": "Ω(n^2)",
-    "wortTime": "Ω(n^2)",
-    "space": "O(1)"
+    "description": "Insertion Sort is a simple algorithm which sorts the list one item at a time. This sort will take each item and keep moving it towards the start until it is 'inserted' into its sorted position. This sort is most efficient with nearly sorted lists but struggles with larger lists.",
+    "link": "https://en.wikipedia.org/wiki/Insertion_sort",
+    "bestTime": "Ω(n)",
+    "averageTime": "Θ(n^2)",
+    "wortTime": "O(n^2)",
+    "space": "O(1)",
+    "stable": "Yes"
   },
   "heap": {
-    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
-    "bestTime": "Ω(n^2)",
-    "averageTime": "Ω(n^2)",
-    "wortTime": "Ω(n^2)",
-    "space": "O(1)"
+    "description": "Heap Sort is an algorithm which uses a data structured called a 'heap'. There are two steps to Heap Sort which are repeated until the list is sorted: 1) Heapify the list, 2) Remove the root. Heapify-ing the list involves creating a heap out of the list (a tree which has a few special properties).",
+    "link": "https://en.wikipedia.org/wiki/Heapsort",
+    "bestTime": "Ω(n log(n))",
+    "averageTime": "Θ(n log(n))",
+    "wortTime": "O(n log(n))",
+    "space": "O(1)",
+    "stable": "No"
   },
   "quick": {
-    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
-    "bestTime": "Ω(n^2)",
-    "averageTime": "Ω(n^2)",
-    "wortTime": "Ω(n^2)",
-    "space": "O(1)"
+    "description": "Quick Sort is a recursive algorithm which chooses a 'partition' and splits the array into two parts, one being all items smaller than the partition, and the other being all elements larger than it. It then recursively chooses partitions for these parts and splits each part into two parts. It keeps doing this until the list is eventually sorted. Quick Sort's speed mainly depends on how the partition is chosen but is still efficient enough to be used frequently in the real world.",
+    "link": "https://en.wikipedia.org/wiki/Quicksort",
+    "bestTime": "Ω(n log(n))",
+    "averageTime": "Θ(n log(n))",
+    "wortTime": "O(n^2)",
+    "space": "O(log(n))",
+    "stable": "No"
   },
   "merge": {
-    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
-    "bestTime": "Ω(n^2)",
-    "averageTime": "Ω(n^2)",
-    "wortTime": "Ω(n^2)",
-    "space": "O(1)"
+    "description": "Merge Sort is a recursive algorithm which splits the list into two halves and sorts each half before 'merging' them together. To sort each half, merge sort is used to recursively split those halves into even smaller halves before merging them together until the list is eventually sorted. Merge Sort is a highly efficient algorithm which can be easy parallelized and is used heavily in the real world (and it's my personal favorite to watch).",
+    "link": "https://en.wikipedia.org/wiki/Merge_sort",
+    "bestTime": "Ω(n log(n))",
+    "averageTime": "Θ(n log(n))",
+    "wortTime": "O(n log(n))",
+    "space": "O(n)",
+    "stable": "Yes"
   },
   "bozo": {
-    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
-    "bestTime": "Ω(n^2)",
-    "averageTime": "Ω(n^2)",
-    "wortTime": "Ω(n^2)",
-    "space": "O(1)"
+    "description": "Bozo Sort is a terribly inefficient algorithm that repeats two steps until the list is sorted: 1) Check if the list is sorted, 2) Swap two random items. This algorithm is never used for real world cases since it won't finish sorting any sizable list until the heat death of the universe.",
+    "link": "https://www.coderslexicon.com/bozosort-definitive-c-c-vb-net-java-php/",
+    "bestTime": "Ω(n)",
+    "averageTime": "Θ(n!)",
+    "wortTime": "O(n!)",
+    "space": "O(1)",
+    "stable": "No"
   }
 }

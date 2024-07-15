@@ -1,0 +1,8 @@
+.cards-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.description-card, .live-stats-card, .sort-stats-card {
+  width: 33%;
+}
