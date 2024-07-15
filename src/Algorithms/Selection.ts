@@ -7,6 +7,7 @@ export default async function SelectionSort(context: SortContextType) {
 
   const getNext = ascending ? Math.min : Math.max;
   const startTime = Date.now();
+  setStats({ comparisons: 0, swaps: 0, time: 0 });
   let { comparisons, time } = stats;
   (comparisons = 0), (time = 0);
 

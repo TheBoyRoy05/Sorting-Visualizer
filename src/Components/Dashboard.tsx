@@ -31,7 +31,6 @@ const Dashboard: FC = () => {
     partition,
     setPartition,
     setBars,
-    setStats,
     barsOnTop,
     setBarsOnTop,
     swap,
@@ -62,10 +61,9 @@ const Dashboard: FC = () => {
       case "bozo":
         return bozoSort();
     }
-    setStats({ comparisons: 0, swaps: 0, time: 0 });
   };
 
-  const DISPLAY_WIDTH = 1000;
+  const DISPLAY_WIDTH = 2000;
   const MAX_BAR_WIDTH = 100;
 
   const createBars = (heights: number[]) => {
@@ -80,14 +78,14 @@ const Dashboard: FC = () => {
 
   const generateRandom = () => {
     const heights = Array.from({ length: arraySize }, () =>
-      getRandomInt(10, 200)
+      getRandomInt(10, 500)
     );
     createBars(heights);
   };
 
   const generateNearlySorted = () => {
     let heights = Array.from({ length: arraySize }, () =>
-      getRandomInt(10, 200)
+      getRandomInt(10, 500)
     ).sort((a, b) => a - b);
     for (let i = 0; i < Math.floor(arraySize / 10); i++) {
       heights = swap(
@@ -101,7 +99,7 @@ const Dashboard: FC = () => {
 
   const generateReverse = () => {
     const heights = Array.from({ length: arraySize }, () =>
-      getRandomInt(10, 200)
+      getRandomInt(10, 500)
     ).sort((a, b) => a - b);
     if (ascending) heights.reverse();
     createBars(heights);
@@ -191,7 +189,7 @@ const Dashboard: FC = () => {
           value={arraySize}
           setValue={setArraySize}
         />
-        <Dropdown text="Sorting Algorithms" options={algorithms} />
+        <Dropdown text="Algorithms" options={algorithms} />
         <Dropdown text="Generate" options={generateOptions} />
         <button className="btn main-btn" onClick={handleSort}>
           {"Visualize " + capitalize(sort) + " Sort!"}

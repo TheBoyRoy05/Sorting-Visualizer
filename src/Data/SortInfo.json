@@ -1,0 +1,51 @@
+{
+  "selection": {
+    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
+    "bestTime": "Ω(n^2)",
+    "averageTime": "Ω(n^2)",
+    "wortTime": "Ω(n^2)",
+    "space": "O(1)"
+  },
+  "bubble": {
+    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
+    "bestTime": "Ω(n^2)",
+    "averageTime": "Ω(n^2)",
+    "wortTime": "Ω(n^2)",
+    "space": "O(1)"
+  },
+  "insertion": {
+    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
+    "bestTime": "Ω(n^2)",
+    "averageTime": "Ω(n^2)",
+    "wortTime": "Ω(n^2)",
+    "space": "O(1)"
+  },
+  "heap": {
+    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
+    "bestTime": "Ω(n^2)",
+    "averageTime": "Ω(n^2)",
+    "wortTime": "Ω(n^2)",
+    "space": "O(1)"
+  },
+  "quick": {
+    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
+    "bestTime": "Ω(n^2)",
+    "averageTime": "Ω(n^2)",
+    "wortTime": "Ω(n^2)",
+    "space": "O(1)"
+  },
+  "merge": {
+    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
+    "bestTime": "Ω(n^2)",
+    "averageTime": "Ω(n^2)",
+    "wortTime": "Ω(n^2)",
+    "space": "O(1)"
+  },
+  "bozo": {
+    "description": "Selection Sort takes one of the simplest approaches to sorting. It splits the array into two parts, a sorted and unsorted part. It then goes through the unsorted part and 'selects' the next item to place in the sorted list. Finally, we swap the selected item into the correct place and then repeat this process until the entire list is sorted.",
+    "bestTime": "Ω(n^2)",
+    "averageTime": "Ω(n^2)",
+    "wortTime": "Ω(n^2)",
+    "space": "O(1)"
+  }
+}

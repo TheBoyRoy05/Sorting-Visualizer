@@ -39,7 +39,7 @@ export const SortProvider: FC<{ children: ReactNode }> = ({ children }) => {
   });
 
   const heights = bars.map((bar) => bar.height);
-  const interval = Math.min(100 / bars.length / sortSpeed, 1) * 500;
+  const interval = Math.min(100 / bars.length / sortSpeed, 1) * 250;
 
   const _swap = (array: number[], i1: number, i2: number) =>
     swap(array, i1, i2, stats);
