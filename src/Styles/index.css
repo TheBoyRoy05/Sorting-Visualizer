@@ -7,6 +7,12 @@ body {
   padding: 0;
   margin: 0;
   background-color: rgb(209, 238, 236);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .btn:hover {
@@ -32,9 +38,9 @@ body {
   }
 }
 
-@media (max-width: 1155px) {
+@media (max-width: 1200px) {
   .board {
-    margin: 0;
+    margin: 0 30px;
   }
 }
 

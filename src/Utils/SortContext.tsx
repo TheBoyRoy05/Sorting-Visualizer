@@ -9,6 +9,7 @@ import {
   StatusProps,
 } from "./Props";
 import { checkSorted, finalize, shift, swap, visualize } from "./SortUtils";
+import useStopwatch from "./useStopwatch";
 
 const SortContext = createContext<SortContextType | undefined>(undefined);
 
@@ -35,22 +36,23 @@ export const SortProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [stats, setStats] = useState<StatsProps>({
     comparisons: 0,
     swaps: 0,
-    time: 0,
   });
+  const {
+    elapsedTime,
+    handleStart: startTimer,
+    handlePause: pauseTimer,
+    handleReset: resetTimer,
+  } = useStopwatch();
 
   const heights = bars.map((bar) => bar.height);
   const interval = Math.min(100 / bars.length / sortSpeed, 1) * 250;
 
-  const _swap = (array: number[], i1: number, i2: number) =>
-    swap(array, i1, i2, stats);
-  const _shift = (array: number[], to: number, from: number) =>
-    shift(array, to, from, stats);
   const _visualize = (heights: number[], statusInfo: StatusProps) =>
     visualize(heights, statusInfo, bars, interval, setBars);
   const _checkSorted = (heights: number[], runAnim = checkAnim) =>
-    checkSorted(heights, ascending, runAnim, stats, _visualize);
+    checkSorted(heights, ascending, runAnim, _visualize);
   const _finalize = (heights: number[]) =>
-    finalize(heights, _checkSorted, _visualize);
+    finalize(heights, pauseTimer, _checkSorted, _visualize);
 
   const appState = {
     arraySize,
@@ -60,8 +62,8 @@ export const SortProvider: FC<{ children: ReactNode }> = ({ children }) => {
     sortSpeed,
     setSortSpeed,
     sort,
-    setSort
-  }
+    setSort,
+  };
 
   const sortState = {
     ascending,
@@ -83,17 +85,25 @@ export const SortProvider: FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const functions = {
-    swap: _swap,
-    shift: _shift,
+    swap: swap,
+    shift: shift,
     visualize: _visualize,
     checkSorted: _checkSorted,
     finalize: _finalize,
-  }
+  };
+
+  const stopwatch = {
+    elapsedTime,
+    startTimer,
+    pauseTimer,
+    resetTimer,
+  };
 
   const context = {
     ...appState,
     ...sortState,
-    ...functions
+    ...functions,
+    ...stopwatch,
   };
 
   return (

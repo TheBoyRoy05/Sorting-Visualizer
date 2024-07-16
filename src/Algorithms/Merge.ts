@@ -5,9 +5,8 @@ export default async function MergeSort(context: SortContextType) {
   const { shift, visualize, finalize } = context;
   let { heights } = context;
 
-  const startTime = Date.now();
-  let { comparisons, time } = stats;
-  (comparisons = 0), (time = 0);
+  let { comparisons, swaps } = stats;
+  (comparisons = 0), (swaps = 0);
 
   const sort = async (start: number, end: number): Promise<void> => {
     if (end - start <= 1) return;
@@ -31,19 +30,17 @@ export default async function MergeSort(context: SortContextType) {
 
       if (left[i] > right[j] === ascending) {
         heights = shift(heights, start + i + j, mid + j);
+        setStats({ swaps: swaps++, comparisons: comparisons++ });
         j++;
       } else {
         i++;
       }
 
-      comparisons++;
-      time = (Date.now() - startTime) / 1000;
-      setStats({ ...stats, comparisons, time });
+      setStats({ swaps, comparisons: comparisons++ });
     }
   };
 
   await sort(0, heights.length);
-  time = (Date.now() - startTime) / 1000;
-  setStats({ ...stats, comparisons, time });
+  setStats({ swaps, comparisons });
   await finalize(heights);
 }

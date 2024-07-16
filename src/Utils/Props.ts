@@ -33,7 +33,6 @@ export interface BarProps {
 export interface StatsProps {
   comparisons: number;
   swaps: number;
-  time: number;
 }
 
 export interface SliderProps {
@@ -89,4 +88,9 @@ export interface SortContextType {
   checkSorted: (heights: number[], runAnim?: boolean) => Promise<boolean>;
   visualize: (heights: number[], status: StatusProps) => Promise<void>;
   finalize: (heights: number[]) => Promise<void>;
+
+  elapsedTime: number;
+  startTimer: () => void;
+  pauseTimer: () => void;
+  resetTimer: () => void;
 }

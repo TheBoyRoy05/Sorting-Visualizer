@@ -7,9 +7,8 @@ export default async function QuickSort(context: SortContextType) {
   let { heights } = context;
 
   const pivots: number[] = [];
-  const startTime = Date.now();
-  let { comparisons, time } = stats;
-  (comparisons = 0), (time = 0);
+  let { comparisons, swaps } = stats;
+  (comparisons = 0), (swaps = 0);
 
   const medianOfThree = (low: number, mid: number, high: number) =>
     [heights[low], heights[mid], heights[high]].sort((x, y) => x - y)[1];
@@ -27,26 +26,27 @@ export default async function QuickSort(context: SortContextType) {
   const lomutoPartition = async (low: number, high: number, pivot: number) => {
     let i = low;
     heights = swap(heights, heights.indexOf(pivot), high);
+    setStats({ swaps: swaps++, comparisons });
 
     for (let j = low; j < high; j++) {
       await visualizeStep(i, j, high);
       if (ascending ? heights[j] <= pivot : heights[j] >= pivot) {
         heights = swap(heights, i, j);
+        setStats({ swaps: swaps++, comparisons });
         i++;
       }
-
-      comparisons++;
-      time = (Date.now() - startTime) / 1000;
-      setStats({ ...stats, comparisons, time });
+      setStats({ swaps, comparisons: comparisons++ });
     }
 
     heights = swap(heights, i, high);
+    setStats({ swaps: swaps++, comparisons });
     return i;
   };
 
   const hoarePartition = async (low: number, high: number, pivot: number) => {
     const mid = Math.floor((low + high) / 2);
     heights = swap(heights, heights.indexOf(pivot), mid);
+    setStats({ swaps: swaps++, comparisons });
     let i = low - 1;
     let j = high + 1;
 
@@ -56,9 +56,7 @@ export default async function QuickSort(context: SortContextType) {
 
       do {
         i++;
-        comparisons++;
-        time = (Date.now() - startTime) / 1000;
-        setStats({ ...stats, comparisons, time });
+        setStats({ swaps, comparisons: comparisons++ });
         await visualizeStep(i, j, pivotIndex);
       } while (
         i <= high && ascending ? heights[i] < pivot : heights[i] > pivot
@@ -66,14 +64,13 @@ export default async function QuickSort(context: SortContextType) {
 
       do {
         j--;
-        comparisons++;
-        time = (Date.now() - startTime) / 1000;
-        setStats({ ...stats, comparisons, time });
+        setStats({ swaps, comparisons: comparisons++ });
         await visualizeStep(i, j, pivotIndex);
       } while (j >= low && ascending ? heights[j] > pivot : heights[j] < pivot);
 
       if (i >= j) return j;
       heights = swap(heights, i, j);
+      setStats({ swaps: swaps++, comparisons });
     }
   };
 
@@ -100,7 +97,6 @@ export default async function QuickSort(context: SortContextType) {
   };
 
   await sort(0, heights.length - 1);
-  time = (Date.now() - startTime) / 1000;
-  setStats({ ...stats, comparisons, time });
+  setStats({ swaps, comparisons });
   finalize(heights);
 }

@@ -5,7 +5,7 @@ import sortInfo from "../Data/SortInfo.json";
 import "../Styles/infoCards.css";
 
 const InfoCards: FC = () => {
-  const { sort, stats } = useSortContext();
+  const { sort, stats, elapsedTime } = useSortContext();
 
   const liveStats = (
     <div className="live-stats card">
@@ -22,7 +22,7 @@ const InfoCards: FC = () => {
         </div>
         <div className="mini-card">
           <b>{"Time"}</b>
-          <p className="stat">{stats.time + " secs"}</p>
+          <p className="stat">{(elapsedTime/1000).toFixed(3) + " secs"}</p>
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@ const InfoCards: FC = () => {
         </div>
         <div className="space-stable mini-card">
           <p className="space-complexity">
-            <b>{"Space Complexity: "}</b>
+            <b>{"Space: "}</b>
             {sortInfo[sort].space}
           </p>
           <p className="stable">

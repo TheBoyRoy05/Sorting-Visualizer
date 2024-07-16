@@ -34,6 +34,8 @@ const Dashboard: FC = () => {
     barsOnTop,
     setBarsOnTop,
     swap,
+    startTimer,
+    resetTimer,
   } = useSortContext();
 
   const selectionSort = useSelectionSort();
@@ -45,6 +47,8 @@ const Dashboard: FC = () => {
   const bozoSort = useBozoSort();
 
   const handleSort = () => {
+    resetTimer();
+    startTimer();
     switch (sort) {
       case "selection":
         return selectionSort();

@@ -2,13 +2,12 @@ import { SortContextType } from "../Utils/Props";
 
 export default async function BubbleSort(context: SortContextType) {
   const { ascending, stats, setStats } = context;
-  const {swap, visualize, finalize } = context;
+  const { swap, visualize, finalize } = context;
   let { heights } = context;
 
   const breakEarly = true;
-  const startTime = Date.now();
-  let { comparisons, time } = stats;
-  (comparisons = 0), (time = 0);
+  let { comparisons, swaps } = stats;
+  (comparisons = 0), (swaps = 0);
 
   for (let i = 1; i <= heights.length; i++) {
     let swapped = false;
@@ -17,19 +16,16 @@ export default async function BubbleSort(context: SortContextType) {
     for (let j = heights.length - 1; j >= i; j--) {
       if (heights[j] < heights[j - 1] === ascending) {
         heights = swap(heights, j, j - 1);
+        setStats({ swaps: swaps++, comparisons });
         swapped = true;
       }
       await visualize(heights, { targets: j - 1, sorting: i - 1 });
-
-      comparisons++;
-      time = (Date.now() - startTime) / 1000;
-      setStats({ ...stats, comparisons, time });
+      setStats({ swaps, comparisons: comparisons++ });
     }
 
     if (!swapped && breakEarly) break;
   }
 
-  time = (Date.now() - startTime) / 1000;
-  setStats({ ...stats, comparisons, time });
+  setStats({ swaps, comparisons });
   await finalize(heights);
 }

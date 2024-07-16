@@ -5,9 +5,8 @@ export default async function HeapSort(context: SortContextType) {
   const { swap, shift, visualize, finalize } = context;
   let { heights } = context;
 
-  const startTime = Date.now();
-  let { comparisons, time } = stats;
-  (comparisons = 0), (time = 0);
+  let { comparisons, swaps } = stats;
+  (comparisons = 0), (swaps = 0);
 
   const heapify = async () => {
     const parent = (index: number) =>
@@ -17,12 +16,10 @@ export default async function HeapSort(context: SortContextType) {
       await visualize(heights, { targets: [index] });
       if (parent(index) < 0) return;
 
-      comparisons++;
+      setStats({ swaps, comparisons: comparisons++ });
       if (heights[index] < heights[parent(index)] === ascending) {
-        time = (Date.now() - startTime) / 1000;
-        setStats({ ...stats, comparisons, time });
-
         heights = swap(heights, index, parent(index));
+        setStats({ swaps: swaps++, comparisons });
         await bubbleUp(parent(index));
       }
     };
@@ -46,9 +43,7 @@ export default async function HeapSort(context: SortContextType) {
           sorting: heapStart,
         };
         await visualize(heights, status);
-        comparisons++;
-        time = (Date.now() - startTime) / 1000;
-        setStats({ ...stats, comparisons, time });
+        setStats({ swaps, comparisons: comparisons++ });
         if (heights[j] < heights[nextIdx] === ascending) nextIdx = j;
       }
 
@@ -57,11 +52,10 @@ export default async function HeapSort(context: SortContextType) {
         targets: [nextIdx, index],
         sorting: heapStart,
       };
+      
       heights = swap(heights, nextIdx, index);
       await visualize(heights, status);
-
-      time = (Date.now() - startTime) / 1000;
-      setStats({ ...stats, comparisons, time });
+      setStats({ swaps: swaps++, comparisons });
       await trickleDown(heapStart, nextIdx);
     };
 
@@ -70,6 +64,7 @@ export default async function HeapSort(context: SortContextType) {
       await visualize(heights, status);
 
       heights = shift(heights, i, heights.length - 1);
+      setStats({ swaps: swaps++, comparisons });
       await trickleDown(i, i);
     }
   };
@@ -77,7 +72,6 @@ export default async function HeapSort(context: SortContextType) {
   await heapify();
   await sort();
 
-  time = (Date.now() - startTime) / 1000;
-  setStats({ ...stats, comparisons, time });
+  setStats({ swaps, comparisons });
   await finalize(heights);
 }
