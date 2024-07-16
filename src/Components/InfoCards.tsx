@@ -56,27 +56,27 @@ const InfoCards: FC = () => {
           <div className="time-complexity">
             <div className="best-time">
               <b>{"Best"}</b>
-              <p>{sortInfo[sort].bestTime}</p>
+              <p className="text">{sortInfo[sort].bestTime}</p>
             </div>
             <div className="average-time">
               <b>{"Average"}</b>
-              <p>{sortInfo[sort].averageTime}</p>
+              <p className="text">{sortInfo[sort].averageTime}</p>
             </div>
             <div className="worst-time">
               <b>{"Worst"}</b>
-              <p>{sortInfo[sort].worstTime}</p>
+              <p className="text">{sortInfo[sort].worstTime}</p>
             </div>
           </div>
         </div>
         <div className="space-stable mini-card">
-          <p className="space-complexity">
+          <div className="space-complexity">
             <b>{"Space: "}</b>
-            {sortInfo[sort].space}
-          </p>
-          <p className="stable">
+            <p className="text">{sortInfo[sort].space}</p>
+          </div>
+          <div className="stable">
             <b>{"Stable: "}</b>
-            {sortInfo[sort].stable}
-          </p>
+            <p className="text">{sortInfo[sort].stable}</p>
+          </div>
         </div>
         <div className="mini-card">
           <p className="read-more">

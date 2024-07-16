@@ -89,6 +89,7 @@ const Dashboard: FC = () => {
     let heights = Array.from({ length: arraySize }, () =>
       getRandomInt(10, 400)
     ).sort((a, b) => a - b);
+    if (!ascending) heights.reverse();
     for (let i = 0; i < Math.floor(arraySize / 10); i++) {
       heights = swap(
         heights,
