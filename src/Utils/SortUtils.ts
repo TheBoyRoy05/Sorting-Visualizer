@@ -82,11 +82,11 @@ export const visualize = async (
 
 export const finalize = async (
   heights: number[],
-  pauseTimer: () => void,
+  stopTImer: () => void,
   checkSorted: (heights: number[]) => Promise<boolean>,
   visualize: (heights: number[], statusInfo: StatusProps) => Promise<void>
 ) => {
-  pauseTimer();
+  stopTImer();
   await visualize(heights, { sorting: heights.length });
   if (await checkSorted(heights)) {
     await visualize(heights, { sorted: heights.length });

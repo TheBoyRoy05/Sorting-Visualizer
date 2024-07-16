@@ -91,6 +91,5 @@ export interface SortContextType {
 
   elapsedTime: number;
   startTimer: () => void;
-  pauseTimer: () => void;
-  resetTimer: () => void;
+  stopTimer: () => void;
 }

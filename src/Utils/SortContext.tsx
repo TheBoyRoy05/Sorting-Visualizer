@@ -9,7 +9,7 @@ import {
   StatusProps,
 } from "./Props";
 import { checkSorted, finalize, shift, swap, visualize } from "./SortUtils";
-import useStopwatch from "./useStopwatch";
+import useStopwatch from "./Stopwatch";
 
 const SortContext = createContext<SortContextType | undefined>(undefined);
 
@@ -39,9 +39,8 @@ export const SortProvider: FC<{ children: ReactNode }> = ({ children }) => {
   });
   const {
     elapsedTime,
-    handleStart: startTimer,
-    handlePause: pauseTimer,
-    handleReset: resetTimer,
+    startTimer,
+    stopTimer,
   } = useStopwatch();
 
   const heights = bars.map((bar) => bar.height);
@@ -52,7 +51,7 @@ export const SortProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const _checkSorted = (heights: number[], runAnim = checkAnim) =>
     checkSorted(heights, ascending, runAnim, _visualize);
   const _finalize = (heights: number[]) =>
-    finalize(heights, pauseTimer, _checkSorted, _visualize);
+    finalize(heights, stopTimer, _checkSorted, _visualize);
 
   const appState = {
     arraySize,
@@ -95,8 +94,7 @@ export const SortProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const stopwatch = {
     elapsedTime,
     startTimer,
-    pauseTimer,
-    resetTimer,
+    stopTimer,
   };
 
   const context = {

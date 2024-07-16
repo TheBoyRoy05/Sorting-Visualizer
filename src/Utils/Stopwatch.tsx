@@ -5,26 +5,20 @@ const useStopwatch = () => {
   const [isRunning, setIsRunning] = useState(false);
   const countRef = useRef(0);
 
-  const handleStart = () => {
-    const startTime = Date.now() - elapsedTime;
+  const startTimer = () => {
+    const startTime = Date.now();
     countRef.current = setInterval(() => {
       setElapsedTime(Date.now() - startTime);
     }, 10);
     setIsRunning(true);
   }
 
-  const handlePause = () => {
+  const stopTimer = () => {
     clearInterval(countRef.current);
     setIsRunning(false);
   }
 
-  const handleReset = () => {
-    clearInterval(countRef.current);
-    setIsRunning(false);
-    setElapsedTime(0);
-  }
-
-  return { elapsedTime, isRunning, handleStart, handlePause, handleReset };
+  return { elapsedTime, isRunning, startTimer, stopTimer };
 }
 
 export default useStopwatch;
