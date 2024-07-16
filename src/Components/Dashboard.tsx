@@ -78,14 +78,14 @@ const Dashboard: FC = () => {
 
   const generateRandom = () => {
     const heights = Array.from({ length: arraySize }, () =>
-      getRandomInt(10, 500)
+      getRandomInt(10, 400)
     );
     createBars(heights);
   };
 
   const generateNearlySorted = () => {
     let heights = Array.from({ length: arraySize }, () =>
-      getRandomInt(10, 500)
+      getRandomInt(10, 400)
     ).sort((a, b) => a - b);
     for (let i = 0; i < Math.floor(arraySize / 10); i++) {
       heights = swap(
@@ -99,7 +99,7 @@ const Dashboard: FC = () => {
 
   const generateReverse = () => {
     const heights = Array.from({ length: arraySize }, () =>
-      getRandomInt(10, 500)
+      getRandomInt(10, 400)
     ).sort((a, b) => a - b);
     if (ascending) heights.reverse();
     createBars(heights);

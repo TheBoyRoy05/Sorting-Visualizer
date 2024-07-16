@@ -4,7 +4,7 @@
     "link": "https://en.wikipedia.org/wiki/Selection_sort",
     "bestTime": "Ω(n^2)",
     "averageTime": "Θ(n^2)",
-    "wortTime": "O(n^2)",
+    "worstTime": "O(n^2)",
     "space": "O(1)",
     "stable": "No"
   },
@@ -13,7 +13,7 @@
     "link": "https://en.wikipedia.org/wiki/Bubble_sort",
     "bestTime": "Ω(n)",
     "averageTime": "Θ(n^2)",
-    "wortTime": "O(n^2)",
+    "worstTime": "O(n^2)",
     "space": "O(1)",
     "stable": "Yes"
   },
@@ -22,7 +22,7 @@
     "link": "https://en.wikipedia.org/wiki/Insertion_sort",
     "bestTime": "Ω(n)",
     "averageTime": "Θ(n^2)",
-    "wortTime": "O(n^2)",
+    "worstTime": "O(n^2)",
     "space": "O(1)",
     "stable": "Yes"
   },
@@ -31,7 +31,7 @@
     "link": "https://en.wikipedia.org/wiki/Heapsort",
     "bestTime": "Ω(n log(n))",
     "averageTime": "Θ(n log(n))",
-    "wortTime": "O(n log(n))",
+    "worstTime": "O(n log(n))",
     "space": "O(1)",
     "stable": "No"
   },
@@ -40,7 +40,7 @@
     "link": "https://en.wikipedia.org/wiki/Quicksort",
     "bestTime": "Ω(n log(n))",
     "averageTime": "Θ(n log(n))",
-    "wortTime": "O(n^2)",
+    "worstTime": "O(n^2)",
     "space": "O(log(n))",
     "stable": "No"
   },
@@ -49,7 +49,7 @@
     "link": "https://en.wikipedia.org/wiki/Merge_sort",
     "bestTime": "Ω(n log(n))",
     "averageTime": "Θ(n log(n))",
-    "wortTime": "O(n log(n))",
+    "worstTime": "O(n log(n))",
     "space": "O(n)",
     "stable": "Yes"
   },
@@ -58,7 +58,7 @@
     "link": "https://www.coderslexicon.com/bozosort-definitive-c-c-vb-net-java-php/",
     "bestTime": "Ω(n)",
     "averageTime": "Θ(n!)",
-    "wortTime": "O(n!)",
+    "worstTime": "O(n!)",
     "space": "O(1)",
     "stable": "No"
   }
