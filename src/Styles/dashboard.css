@@ -14,13 +14,15 @@
 }
 
 .board {
-  flex-grow: 1;
+  flex-wrap: wrap;
+  margin: 0 250px;
 }
 
 .title {
   color: white;
-  margin: 0 15px 0 20px;
-  flex-shrink: 0;
+  margin-left: 20px;
+  position: absolute;
+  left: 0;
 }
 
 .main-btn {

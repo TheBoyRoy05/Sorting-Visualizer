@@ -33,6 +33,11 @@
   border: 1px solid black;
 }
 
+.time-complexity-container > .hbar {
+  width: 50%;
+  margin-left: 25%;
+}
+
 .description {
   text-indent: 20px;
   margin: 0;
@@ -57,12 +62,17 @@
 .time-complexity-container > h4 {
   margin: 0;
   margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .time-complexity > div, .card-content {
   display: flex;
   flex-flow: column;
   align-items: center;
+}
+
+.time-complexity > div {
+  margin-top: 0.75rem;
 }
 
 .time-complexity > div > p {
@@ -76,7 +86,7 @@
 }
 
 .space-stable {
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 }
 

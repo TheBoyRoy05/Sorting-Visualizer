@@ -53,6 +53,7 @@ const InfoCards: FC = () => {
       <div className="card-content">
         <div className="time-complexity-container mini-card">
           <h4>{"Time Complexity"}</h4>
+          <div className="hbar"/>
           <div className="time-complexity">
             <div className="best-time">
               <b>{"Best"}</b>
