@@ -2,6 +2,10 @@
 
 Welcome to my Sorting Visualizer! I built this application because I wanted to showcase my React skills while building something fun to use. Since sorting algorithms are an important prerequisite to algorithmic thinking, being able to visualize them will undoubtedly give a better understanding of each algorithm's key ideas.
 
+I hope that you enjoy playing around with this visualization tool just as much as I enjoyed building it. You can access it here (use a Chromium browser for the best experience): 
+
+https://theboyroy05.github.io/Sorting-Visualizer/
+
 ## Meet the Algorithms
 Currently, I have implemented the following Sorting Algorithms:
 
