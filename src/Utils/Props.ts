@@ -35,15 +35,6 @@ export interface StatsProps {
   swaps: number;
 }
 
-export interface SliderProps {
-  text: string;
-  min: number;
-  max: number;
-  step: number;
-  value: number;
-  setValue: (value: number) => void;
-}
-
 export interface DropdownProps {
   text: string;
   options: optionType[];

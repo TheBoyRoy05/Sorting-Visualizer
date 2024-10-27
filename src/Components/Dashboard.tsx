@@ -12,9 +12,7 @@ import {
   useQuickSort,
   useSelectionSort,
 } from "../Algorithms/SortHooks";
-import "../Styles/dashboard.css";
 import Dropdown from "./Dropdown";
-import Slider from "./Slider";
 
 const Dashboard: FC = () => {
   const {
@@ -79,31 +77,25 @@ const Dashboard: FC = () => {
   };
 
   const generateRandom = () => {
-    const heights = Array.from({ length: arraySize }, () =>
-      getRandomInt(10, 400)
-    );
+    const heights = Array.from({ length: arraySize }, () => getRandomInt(10, 400));
     createBars(heights);
   };
 
   const generateNearlySorted = () => {
-    let heights = Array.from({ length: arraySize }, () =>
-      getRandomInt(10, 400)
-    ).sort((a, b) => a - b);
+    let heights = Array.from({ length: arraySize }, () => getRandomInt(10, 400)).sort(
+      (a, b) => a - b
+    );
     if (!ascending) heights.reverse();
     for (let i = 0; i < Math.floor(arraySize / 10); i++) {
-      heights = swap(
-        heights,
-        getRandomInt(0, arraySize),
-        getRandomInt(0, arraySize)
-      );
+      heights = swap(heights, getRandomInt(0, arraySize), getRandomInt(0, arraySize));
     }
     createBars(heights);
   };
 
   const generateReverse = () => {
-    const heights = Array.from({ length: arraySize }, () =>
-      getRandomInt(10, 400)
-    ).sort((a, b) => a - b);
+    const heights = Array.from({ length: arraySize }, () => getRandomInt(10, 400)).sort(
+      (a, b) => a - b
+    );
     if (ascending) heights.reverse();
     createBars(heights);
   };
@@ -166,8 +158,7 @@ const Dashboard: FC = () => {
       ? [
           {
             text: partition,
-            handleClick: () =>
-              setPartition(partition === "Lomuto" ? "Hoare" : "Lomuto"),
+            handleClick: () => setPartition(partition === "Lomuto" ? "Hoare" : "Lomuto"),
           },
         ]
       : []),
@@ -181,32 +172,46 @@ const Dashboard: FC = () => {
   ];
 
   return (
-    <div className="dashboard">
-      <h2 className="title">Sorting Visualizer</h2>
-      <div className="board">
-        <Slider
-          text="Array Size"
-          min={4}
-          max={100}
-          step={1}
-          value={arraySize}
-          setValue={setArraySize}
-        />
-        <Dropdown text="Algorithms" options={algorithms} />
-        <Dropdown text="Generate" options={generateOptions} />
-        <button className="btn main-btn" onClick={handleSort}>
-          {"Visualize " + capitalize(sort) + " Sort!"}
-        </button>
-        <Dropdown text="Sort Options" options={sortOptions} />
-        <Dropdown text="Settings" options={settings} />
-        <Slider
-          text="Sort Speed"
-          min={1}
-          max={100}
-          step={1}
-          value={sortSpeed}
-          setValue={setSortSpeed}
-        />
+    <div className="flex bg-slate-800 px-4 py-4 border-b-2 border-slate-700">
+      <h2 className="absolute top-10 left-8 text-2xl font-bold text-white helvetica">
+        Sorting Visualizer
+      </h2>
+      <div className="flex flex-col gap-4 w-full justify-center items-center">
+        <div className="flex gap-10">
+          <div className="flex items-center gap-4">
+            <p className="text-white font-bold">{"Array Size: "}</p>
+            <input
+              className="range range-sm range-primary w-40"
+              type="range"
+              onChange={(e) => setArraySize(Number(e.target.value))}
+              min={4}
+              max={100}
+              step={1}
+              value={arraySize}
+            />
+          </div>
+          <div className="flex items-center gap-4">
+            <p className="text-white font-bold">{"Sort Speed: "}</p>
+            <input
+              className="range range-sm range-primary w-40"
+              type="range"
+              onChange={(e) => setSortSpeed(Number(e.target.value))}
+              min={1}
+              max={100}
+              step={1}
+              value={sortSpeed}
+            />
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <Dropdown text="Algorithms" options={algorithms} />
+          <Dropdown text="Generate" options={generateOptions} />
+          <button className="btn btn-primary" onClick={handleSort}>
+            {"Visualize " + capitalize(sort) + " Sort!"}
+          </button>
+          <Dropdown text="Sort Options" options={sortOptions} />
+          <Dropdown text="Settings" options={settings} />
+        </div>
       </div>
     </div>
   );

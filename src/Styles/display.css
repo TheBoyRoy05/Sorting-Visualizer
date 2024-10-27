@@ -29,23 +29,23 @@
 }
 
 .bar-unsorted {
-  background-color: rgb(100, 150, 216);
+  background-color: oklch(var(--p))
 }
 
 .bar-targeted {
-  background-color: rgb(240, 93, 93);
+  background-color: rgb(238, 62, 62);
 }
 
 .bar-selected {
-  background-color: rgb(252, 202, 111);
+  background-color: rgb(254, 190, 71);
 }
 
 .bar-sorting {
-  background-color: rgb(237, 143, 240);
+  background-color: rgb(226, 111, 230);
 }
 
 .bar-sorted {
-  background-color: rgb(64, 240, 102);
+  background-color: rgb(54, 241, 95);
 }
 
 .hide {
