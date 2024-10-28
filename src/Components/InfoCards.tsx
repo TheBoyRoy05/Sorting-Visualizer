@@ -6,7 +6,8 @@ import Card from "./Card";
 
 const InfoCards: FC = () => {
   const { sort, stats, elapsedTime } = useSortContext();
-  const miniCard = "w-full bg-slate-700 rounded-lg p-4 text-center text-white border border-slate-500";
+  const miniCard =
+    "w-full bg-slate-700 rounded-lg p-4 text-center text-white border border-slate-500";
 
   return (
     <div className="flex gap-4 px-6">
@@ -32,7 +33,9 @@ const InfoCards: FC = () => {
         <div className={miniCard}>
           <p className="">
             {"Read more about "}
-            <a href={sortInfo[sort].link} className="underline">{capitalize(sort) + " Sort"}</a>
+            <a href={sortInfo[sort].link} target="_blank" className="underline">
+              {capitalize(sort) + " Sort"}
+            </a>
           </p>
         </div>
       </Card>
@@ -69,7 +72,11 @@ const InfoCards: FC = () => {
         <div className={miniCard}>
           <p className="read-more">
             {"Read more about "}
-            <a href={"https://www.programiz.com/dsa/asymptotic-notations"} className="underline">
+            <a
+              href={"https://www.programiz.com/dsa/asymptotic-notations"}
+              target="_blank"
+              className="underline"
+            >
               {"Asymptotic Notation"}
             </a>
           </p>
