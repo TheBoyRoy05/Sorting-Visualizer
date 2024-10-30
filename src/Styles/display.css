@@ -37,11 +37,11 @@
 }
 
 .bar-selected {
-  background-color: rgb(254, 190, 71);
+  background-color: rgb(226, 111, 230);
 }
 
 .bar-sorting {
-  background-color: rgb(130, 58, 224);
+  background-color: rgb(96 165 250);
 }
 
 .bar-sorted {
