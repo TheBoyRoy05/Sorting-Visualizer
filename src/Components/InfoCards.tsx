@@ -7,26 +7,26 @@ import Card from "./Card";
 const InfoCards: FC = () => {
   const { sort, stats, elapsedTime } = useSortContext();
   const miniCard =
-    "w-full bg-slate-700 rounded-lg p-4 text-center text-white border border-slate-500";
+    "w-full bg-slate-700 rounded-lg px-4 py-2 text-center text-white text-lg border border-slate-500";
 
   return (
     <div className="flex gap-4 px-6">
-      <Card title="Live Statistics">
+      <Card title="Live Statistics" otherClass="flex-[2]">
         <div className={miniCard}>
-          <b className="text-lg">{"Comparisons"}</b>
+          <b>{"Comparisons"}</b>
           <p className="text-2xl font-bold">{stats.comparisons}</p>
         </div>
         <div className={miniCard}>
-          <b className="text-lg">{"Swaps"}</b>
+          <b>{"Swaps"}</b>
           <p className="text-2xl font-bold">{stats.swaps}</p>
         </div>
         <div className={miniCard}>
-          <b className="text-lg">{"Time"}</b>
+          <b>{"Time"}</b>
           <p className="text-2xl font-bold">{(elapsedTime / 1000).toFixed(3) + " secs"}</p>
         </div>
       </Card>
 
-      <Card title={capitalize(sort) + " Sort"} customClass="flex-2">
+      <Card title={capitalize(sort) + " Sort"} otherClass="flex-[3]">
         <div className={miniCard}>
           <p className="text-left indent-6">{sortInfo[sort].description}</p>
         </div>
@@ -40,7 +40,7 @@ const InfoCards: FC = () => {
         </div>
       </Card>
 
-      <Card title="Sort Statistics">
+      <Card title="Sort Statistics" otherClass="flex-[2]">
         <div className={miniCard + " flex-col"}>
           <h4 className="text-white text-lg font-bold">{"Time Complexity"}</h4>
           <div className="border-b border-slate-300 mb-2" />

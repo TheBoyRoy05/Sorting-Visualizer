@@ -20,7 +20,7 @@ const Bar: FC<BarProps> = ({ width, height, status }) => {
 const Display: FC = () => {
   const { bars } = useSortContext();
   return (
-    <div className={"display"}>
+    <div className="display flex-1">
       {bars.map((bar, index) => (
         <Bar key={index} {...bar} />
       ))}

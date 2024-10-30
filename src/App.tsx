@@ -6,7 +6,7 @@ import InfoCards from "./Components/InfoCards";
 
 const App: FC = () => {
   return (
-    <div className="h-full">
+    <div className="h-screen flex flex-col">
       <Dashboard />
       <Display />
       <InfoCards />
